@@ -1,0 +1,156 @@
+{
+    "Filters" : [
+                 {
+                 "name" : "All",
+                 "filterValue" : "",
+                 "attributeName" : "animal",
+                 "category" : "Pets",
+                 "subCategory" : "Type",
+                 "_id" : "1.1"
+                 },
+                 {
+                 "name" : "Dog",
+                 "filterValue" : "Dog",
+                 "attributeName" : "animal",
+                 "category" : "Pets",
+                 "subCategory" : "Type",
+                 "_id" : "1.2"
+                 },
+                 {
+                 "name" : "Cat",
+                 "filterValue" : "Cat",
+                 "attributeName" : "animal",
+                 "category" : "Pets",
+                 "subCategory" : "Type",
+                 "_id" : "1.3"
+                 },
+                 {
+                 "name" : "All",
+                 "filterValue" : "",
+                 "attributeName" : "age",
+                 "category" : "Pets",
+                 "subCategory" : "Age",
+                 "_id" : "2.1"
+                 },
+                 {
+                 "name" : "Baby",
+                 "filterValue" : "Baby",
+                 "attributeName" : "age",
+                 "category" : "Pets",
+                 "subCategory" : "Age",
+                 "_id" : "2.2"
+                 },
+                 {
+                 "name" : "Young",
+                 "filterValue" : "Young",
+                 "attributeName" : "age",
+                 "category" : "Pets",
+                 "subCategory" : "Age",
+                 "_id" : "2.3"
+                 },
+                 {
+                 "name" : "Adult",
+                 "filterValue" : "Adult",
+                 "attributeName" : "age",
+                 "category" : "Pets",
+                 "subCategory" : "Age",
+                 "_id" : "2.4"
+                 },
+                 {
+                 "name" : "Senior",
+                 "filterValue" : "Senior",
+                 "attributeName" : "age",
+                 "category" : "Pets",
+                 "subCategory" : "Age",
+                 "_id" : "2.5"
+                 },
+                 {
+                 "name" : "All",
+                 "filterValue" : "",
+                 "attributeName" : "sex",
+                 "category" : "Pets",
+                 "subCategory" : "Gender",
+                 "_id" : "3.1"
+                 },
+                 {
+                 "name" : "Male",
+                 "filterValue" : "Male",
+                 "attributeName" : "sex",
+                 "category" : "Pets",
+                 "subCategory" : "Gender",
+                 "_id" : "3.2"
+                 },
+                 {
+                 "name" : "Female",
+                 "filterValue" : "Female",
+                 "attributeName" : "sex",
+                 "category" : "Pets",
+                 "subCategory" : "Gender",
+                 "_id" : "3.3"
+                 },
+                 {
+                 "name" : "City",
+                 "filterValue" : "City",
+                 "attributeName" : "city",
+                 "category" : "Pets",
+                 "subCategory" : "Location",
+                 "_id" : "3.4"
+                 },
+                 {
+                 "name" : "State",
+                 "filterValue" : "State",
+                 "attributeName" : "state",
+                 "category" : "Pets",
+                 "subCategory" : "Location",
+                 "_id" : "3.5"
+                 },
+                 {
+                 "name" : "City",
+                 "filterValue" : "City",
+                 "attributeName" : "city",
+                 "category" : "Shelter",
+                 "subCategory" : "Location",
+                 "_id" : "4.1"
+                 },
+                 {
+                 "name" : "State",
+                 "filterValue" : "State",
+                 "attributeName" : "state",
+                 "category" : "Shelter",
+                 "subCategory" : "Location",
+                 "_id" : "4.2"
+                 },
+                 {
+                 "name" : "City",
+                 "filterValue" : "City",
+                 "attributeName" : "locationCity",
+                 "category" : "Events",
+                 "subCategory" : "Location",
+                 "_id" : "4.3"
+                 },
+                 {
+                 "name" : "State",
+                 "filterValue" : "State",
+                 "attributeName" : "locationState",
+                 "category" : "Events",
+                 "subCategory" : "Location",
+                 "_id" : "4.4"
+                 },
+                 {
+                 "name" : "Start",
+                 "filterValue" : "Start",
+                 "attributeName" : "startTimeDate",
+                 "category" : "Events",
+                 "subCategory" : "Date",
+                 "_id" : "4.5"
+                 },
+                 {
+                 "name" : "End",
+                 "filterValue" : "End",
+                 "attributeName" : "endTimeDate",
+                 "category" : "Events",
+                 "subCategory" : "Date",
+                 "_id" : "4.6"
+                 }
+                 ]
+}

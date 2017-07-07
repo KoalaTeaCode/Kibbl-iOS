@@ -1,0 +1,152 @@
+PODS:
+  - Alamofire (4.5.0)
+  - AlamofireObjectMapper (4.1.0):
+    - Alamofire (~> 4.1)
+    - ObjectMapper (~> 2.0)
+  - BetterSegmentedControl (0.8)
+  - Bolts (1.8.4):
+    - Bolts/AppLinks (= 1.8.4)
+    - Bolts/Tasks (= 1.8.4)
+  - Bolts/AppLinks (1.8.4):
+    - Bolts/Tasks
+  - Bolts/Tasks (1.8.4)
+  - Crashlytics (3.8.4):
+    - Fabric (~> 1.6.3)
+  - Eureka (3.0.0)
+  - Fabric (1.6.11)
+  - FacebookCore (0.2.0):
+    - Bolts (~> 1.8)
+    - FBSDKCoreKit (~> 4.15)
+  - FacebookLogin (0.2.0):
+    - Bolts (~> 1.8)
+    - FacebookCore (~> 0.2)
+    - FBSDKCoreKit (~> 4.15)
+    - FBSDKLoginKit (~> 4.15)
+  - FBSDKCoreKit (4.23.0):
+    - Bolts (~> 1.7)
+  - FBSDKLoginKit (4.23.0):
+    - FBSDKCoreKit
+  - Firebase/Core (4.0.2):
+    - FirebaseAnalytics (= 4.0.1)
+    - FirebaseCore (= 4.0.2)
+  - Firebase/Messaging (4.0.2):
+    - Firebase/Core
+    - FirebaseMessaging (= 2.0.0)
+  - FirebaseAnalytics (4.0.1):
+    - FirebaseCore (~> 4.0)
+    - FirebaseInstanceID (~> 2.0)
+    - GoogleToolboxForMac/NSData+zlib (~> 2.1)
+  - FirebaseCore (4.0.2):
+    - GoogleToolboxForMac/NSData+zlib (~> 2.1)
+  - FirebaseInstanceID (2.0.0):
+    - FirebaseCore (~> 4.0)
+  - FirebaseMessaging (2.0.0):
+    - FirebaseAnalytics (~> 4.0)
+    - FirebaseCore (~> 4.0)
+    - FirebaseInstanceID (~> 2.0)
+    - GoogleToolboxForMac/Logger (~> 2.1)
+    - Protobuf (~> 3.1)
+  - FittableFontLabel (1.4.0)
+  - GoogleToolboxForMac/Defines (2.1.1)
+  - GoogleToolboxForMac/Logger (2.1.1):
+    - GoogleToolboxForMac/Defines (= 2.1.1)
+  - GoogleToolboxForMac/NSData+zlib (2.1.1):
+    - GoogleToolboxForMac/Defines (= 2.1.1)
+  - IQKeyboardManager (4.0.10)
+  - Kingfisher (3.10.2)
+  - KoalaTeaFlowLayout (0.2.1)
+  - Nimble (7.0.1)
+  - ObjectMapper (2.2.7)
+  - Pageboy (1.2.1)
+  - PKHUD (4.2.3)
+  - Protobuf (3.3.0)
+  - Quick (1.1.0)
+  - Realm (2.8.2):
+    - Realm/Headers (= 2.8.2)
+  - Realm/Headers (2.8.2)
+  - RealmSwift (2.8.2):
+    - Realm (= 2.8.2)
+  - Reusable (4.0.0):
+    - Reusable/Storyboard (= 4.0.0)
+    - Reusable/View (= 4.0.0)
+  - Reusable/Storyboard (4.0.0)
+  - Reusable/View (4.0.0)
+  - SideMenu (2.3.2)
+  - SnapKit (3.2.0)
+  - SwifterSwift (1.6.4)
+  - SwiftIcons (1.5.1)
+  - SwiftyBeaver (1.2.2)
+  - SwiftyJSON (3.1.4)
+  - UIFontComplete (0.4.0)
+
+DEPENDENCIES:
+  - Alamofire (~> 4.0)
+  - AlamofireObjectMapper (~> 4.0)
+  - BetterSegmentedControl (~> 0.7)
+  - Crashlytics
+  - Eureka
+  - Fabric
+  - FacebookCore
+  - FacebookLogin
+  - Firebase/Core
+  - Firebase/Messaging
+  - FittableFontLabel
+  - IQKeyboardManager
+  - Kingfisher (~> 3.0)
+  - KoalaTeaFlowLayout
+  - Nimble
+  - Pageboy
+  - PKHUD (~> 4.0)
+  - Quick
+  - RealmSwift
+  - Reusable
+  - SideMenu
+  - SnapKit
+  - SwifterSwift
+  - SwiftIcons
+  - SwiftyBeaver
+  - SwiftyJSON
+  - UIFontComplete
+
+SPEC CHECKSUMS:
+  Alamofire: f28cdffd29de33a7bfa022cbd63ae95a27fae140
+  AlamofireObjectMapper: 435adc82f5b367679bd9e71c4974a54efd0b2521
+  BetterSegmentedControl: 9194e20687a02dd498a4e542cf523bdd8620fcb7
+  Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
+  Crashlytics: 79e236942ca1e7fc641df1feb9a275360a78ab6a
+  Eureka: f36fd440c3ebb7bfea0a4fbe6f16a05f1cb35906
+  Fabric: 5911403591946b8228ab1c51d98f1d7137e863c6
+  FacebookCore: 2cb3f0fbff218e9d3119cec84bae983b232412de
+  FacebookLogin: c9d606504735780a9e3002465a615512e0a691a5
+  FBSDKCoreKit: d7829f5a69901cd7296105328e4c3c3fc7da6518
+  FBSDKLoginKit: 6b92bd65f319d669d2b0730e49db495ef1660566
+  Firebase: c7ad0731eab26d18a3fc547dd048b0f7cd9c63ae
+  FirebaseAnalytics: 4d7040fefc3cd8b291cde35f12cf063d7963f15d
+  FirebaseCore: 1a8bf6c795ad07d2918278657954ffd2552e9c17
+  FirebaseInstanceID: 9fbf536668f4d3f0880e7438456dabd1376e294b
+  FirebaseMessaging: 227406c05b0dc9290702d2e9f18ab5528f0c2cf2
+  FittableFontLabel: 20502441e83bb41eb8b41611cca91af85c4e21e3
+  GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
+  IQKeyboardManager: 593ee99b88381f4b9ccb22bd680f22606351bd41
+  Kingfisher: 7297492bf8cec9b2e2dee3519f2219948580d98e
+  KoalaTeaFlowLayout: e15286230f54eaf8dae0fceab780016931144311
+  Nimble: 657d000e11df8aebe27cdaf9d244de7f30ed87f7
+  ObjectMapper: 65abcfd9a61cf7396cbd14a4fb22fddfcc46577e
+  Pageboy: b5112693f620c3812ff80ed6ff7f8b1ffdea4363
+  PKHUD: c7692163a09875cbf15827dc581df3c5cf7f1015
+  Protobuf: d582fecf68201eac3d79ed61369ef45734394b9c
+  Quick: dafc587e21eed9f4cab3249b9f9015b0b7a7f71d
+  Realm: 0e262abf087c7054013e00579274f7e070486d4a
+  RealmSwift: 73565e91bc403c1149e4acf31ff9de506b2f9459
+  Reusable: 98e5fff1e0e2e00872199699b276dde08ee56c07
+  SideMenu: 3fa07dd05d4bade2b6f9889fb1877e312e1ba319
+  SnapKit: 1ca44df72cfa543218d177cb8aab029d10d86ea7
+  SwifterSwift: 92c73c47c3cbf7d5f788adf6459bf07b5d23d3fb
+  SwiftIcons: 287593643898af5a9ef16be4b1f9cf91a436cbc7
+  SwiftyBeaver: 90a39e3dc5136b7285f2e4c870b107e3933b8b84
+  SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
+  UIFontComplete: 2a696b721d56ca50fcd5bdb1a0e3c2c4e0a95663
+
+PODFILE CHECKSUM: e7ec10f36a9f67bcf18e7ce86a45762472fdcc8a
+
+COCOAPODS: 1.2.1

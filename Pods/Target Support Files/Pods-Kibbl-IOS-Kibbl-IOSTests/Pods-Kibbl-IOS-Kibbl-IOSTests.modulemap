@@ -1,0 +1,6 @@
+framework module Pods_Kibbl_IOS_Kibbl_IOSTests {
+  umbrella header "Pods-Kibbl-IOS-Kibbl-IOSTests-umbrella.h"
+
+  export *
+  module * { export * }
+}

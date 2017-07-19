@@ -127,20 +127,20 @@ class UpdatesCollectionViewCell: UICollectionViewCell, Reusable {
     
     func setupLabels() {
         titleLabel.text = "County Animal Shelter"
-        titleLabel.font = UIFont.boldSystemFont(ofSize: 30)
+        titleLabel.font = UIFont.boldSystemFont(ofSize: 30.calculateWidth())
         titleLabel.adjustsFontSizeToFitWidth = false
         titleLabel.minimumScaleFactor = 0.25
         titleLabel.numberOfLines = 1
         titleLabel.lineBreakMode = .byTruncatingTail
         
         descLabel.text = ""
-        descLabel.font = UIFont.boldSystemFont(ofSize: 30)
+        descLabel.font = UIFont.boldSystemFont(ofSize: 30.calculateWidth())
         descLabel.adjustsFontSizeToFitWidth = false
         descLabel.minimumScaleFactor = 0.25
         descLabel.numberOfLines = 1
         
         locationLabel.text = "Baton Rouge, LA"
-        locationLabel.font = UIFont.boldSystemFont(ofSize: 30)
+        locationLabel.font = UIFont.boldSystemFont(ofSize: 30.calculateWidth())
         locationLabel.adjustsFontSizeToFitWidth = true
         locationLabel.minimumScaleFactor = 0.25
         locationLabel.numberOfLines = 1
@@ -148,7 +148,7 @@ class UpdatesCollectionViewCell: UICollectionViewCell, Reusable {
         locationLabel.baselineAdjustment = .alignCenters
         
         dateLabel.text = ""
-        dateLabel.font = UIFont.boldSystemFont(ofSize: 30)
+        dateLabel.font = UIFont.boldSystemFont(ofSize: 30.calculateWidth())
         dateLabel.adjustsFontSizeToFitWidth = true
         dateLabel.minimumScaleFactor = 0.25
         dateLabel.numberOfLines = 1

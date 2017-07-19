@@ -63,7 +63,7 @@ class PetSkillsCollectionViewCell: UICollectionViewCell, Reusable {
     func setupLabels() {
         self.bottomView.addSubview(cellLabel)
         
-        cellLabel.font = UIFont.systemFont(ofSize: 14)
+        cellLabel.font = UIFont.systemFont(ofSize: 14.calculateWidth())
         cellLabel.adjustsFontSizeToFitWidth = true
         cellLabel.numberOfLines = 1
         cellLabel.minimumScaleFactor = 0.25

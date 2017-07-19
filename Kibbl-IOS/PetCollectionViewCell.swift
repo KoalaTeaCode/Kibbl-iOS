@@ -147,7 +147,7 @@ class PetCollectionViewCell: UICollectionViewCell, Reusable {
     
     func setupLabels() {
         titleLabel.text = "Ruby"
-        titleLabel.font = UIFont.systemFont(ofSize: 30)
+        titleLabel.font = UIFont.systemFont(ofSize: 30.calculateWidth())
         titleLabel.adjustsFontSizeToFitWidth = false
         titleLabel.minimumScaleFactor = 0.25
         titleLabel.numberOfLines = 1
@@ -156,7 +156,7 @@ class PetCollectionViewCell: UICollectionViewCell, Reusable {
         titleLabel.baselineAdjustment = .alignCenters
         
         breedLabel.text = "Pug/Pomeranian Mix"
-        breedLabel.font = UIFont.systemFont(ofSize: 20)
+        breedLabel.font = UIFont.systemFont(ofSize: 20.calculateWidth())
         breedLabel.adjustsFontSizeToFitWidth = false
         breedLabel.minimumScaleFactor = 0.25
         breedLabel.numberOfLines = 1
@@ -165,7 +165,7 @@ class PetCollectionViewCell: UICollectionViewCell, Reusable {
         breedLabel.baselineAdjustment = .alignCenters
         
         descLabel.text = "Spunky little pug puppy that will follow you…"
-        descLabel.font = UIFont.boldSystemFont(ofSize: 30)
+        descLabel.font = UIFont.boldSystemFont(ofSize: 30.calculateWidth())
         descLabel.adjustsFontSizeToFitWidth = false
         descLabel.minimumScaleFactor = 0.25
         descLabel.numberOfLines = 1
@@ -173,7 +173,7 @@ class PetCollectionViewCell: UICollectionViewCell, Reusable {
     }
     
     func setupImages() {
-        commentImageButton.setImage(#imageLiteral(resourceName: "Comment"), for: .normal)
+//        commentImageButton.setImage(#imageLiteral(resourceName: "Comment"), for: .normal)
         commentImageButton.imageView?.contentMode = .scaleAspectFit
         commentImageButton.addTarget(self, action: #selector(self.commentPressed), for: .touchUpInside)
         
@@ -195,17 +195,17 @@ class PetCollectionViewCell: UICollectionViewCell, Reusable {
         stackView.distribution = .fillProportionally
         stackView.spacing = 2
         
-        label1.font = UIFont.systemFont(ofSize: 14)
+        label1.font = UIFont.systemFont(ofSize: 14.calculateWidth())
         label1.textAlignment = .center
         label1.textColor = UIColor(hex: 0x95928E)
         label1.backgroundColor = UIColor(hex: 0xF9F9F9)
         
-        label2.font = UIFont.systemFont(ofSize: 14)
+        label2.font = UIFont.systemFont(ofSize: 14.calculateWidth())
         label2.textAlignment = .center
         label2.textColor = UIColor(hex: 0x95928E)
         label2.backgroundColor = UIColor(hex: 0xF9F9F9)
         
-        label3.font = UIFont.systemFont(ofSize: 14)
+        label3.font = UIFont.systemFont(ofSize: 14.calculateWidth())
         label3.textAlignment = .center
         label3.textColor = UIColor(hex: 0x95928E)
         label3.backgroundColor = UIColor(hex: 0xF9F9F9)

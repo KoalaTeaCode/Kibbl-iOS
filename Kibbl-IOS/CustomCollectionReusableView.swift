@@ -35,7 +35,7 @@ class CustomCollectionReusableView: UICollectionReusableView, Reusable {
             make.height.equalToSuperview().dividedBy(2)
         }
         
-        titleLabel.font = UIFont.systemFont(ofSize: 30)
+        titleLabel.font = UIFont.systemFont(ofSize: 30.calculateWidth())
         titleLabel.adjustsFontSizeToFitWidth = true
         titleLabel.minimumScaleFactor = 0.25
         titleLabel.numberOfLines = 1

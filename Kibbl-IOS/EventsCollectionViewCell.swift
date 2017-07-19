@@ -126,27 +126,27 @@ class EventsCollectionViewCell: UICollectionViewCell, Reusable {
     
     func setupLabels() {
         titleLabel.text = "Pets n More Adoption Drive"
-        titleLabel.font = UIFont.boldSystemFont(ofSize: 30)
+        titleLabel.font = UIFont.boldSystemFont(ofSize: 30.calculateWidth())
         titleLabel.adjustsFontSizeToFitWidth = false
         titleLabel.minimumScaleFactor = 0.25
         titleLabel.numberOfLines = 1
         titleLabel.lineBreakMode = .byTruncatingTail
         
         dateLabel.text = "March 28—31, 10:00 AM—5:00 PM"
-        dateLabel.font = UIFont.boldSystemFont(ofSize: 30)
+        dateLabel.font = UIFont.boldSystemFont(ofSize: 30.calculateWidth())
         dateLabel.adjustsFontSizeToFitWidth = true
         dateLabel.minimumScaleFactor = 0.25
         dateLabel.numberOfLines = 1
         
         locationLabel.text = "Baton Rouge, LA"
-        locationLabel.font = UIFont.boldSystemFont(ofSize: 30)
+        locationLabel.font = UIFont.boldSystemFont(ofSize: 30.calculateWidth())
         locationLabel.adjustsFontSizeToFitWidth = true
         locationLabel.minimumScaleFactor = 0.25
         locationLabel.numberOfLines = 1
     }
     
     func setupImages() {
-        commentImageButton.setImage(#imageLiteral(resourceName: "Comment"), for: .normal)
+//        commentImageButton.setImage(#imageLiteral(resourceName: "Comment"), for: .normal)
         commentImageButton.imageView?.contentMode = .scaleAspectFit
         commentImageButton.addTarget(self, action: #selector(self.commentPressed), for: .touchUpInside)
         

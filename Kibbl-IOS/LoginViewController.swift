@@ -284,10 +284,9 @@ class LoginViewController: UIViewController {
                 HUD.hide()
                 return
             }
-            HUD.hide()
-            // Completed so present Tab controller
-            let vc = CustomTabViewController()
-            self.navigationController?.pushViewController(vc, animated: true)
+            HUD.hide({ _ in
+                self.navigationController?.popViewController()
+            })
         })
     }
     

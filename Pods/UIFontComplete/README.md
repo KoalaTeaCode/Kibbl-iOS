@@ -1,5 +1,6 @@
 # UIFontComplete
 [![Build Status](https://travis-ci.org/Nirma/UIFontComplete.svg?branch=master)](https://travis-ci.org/Nirma/UIFontComplete)
+![Swift 4.0](https://img.shields.io/badge/Swift-4.0-orange.svg)
 ![Swift 3.1.1](https://img.shields.io/badge/Swift-3.1.1-orange.svg)
 ![CodeCov](https://img.shields.io/codecov/c/github/Nirma/UIFontComplete.svg)
 [![CocoaPods compatible](https://img.shields.io/cocoapods/v/UIFontComplete.svg)](#cocoapods)
@@ -76,6 +77,11 @@ UIFontComplete to your `Podfile`:
 ```
 pod 'UIFontComplete'
 ```
+
+## Swift 4 Support
+Swift 4 support is currently being tracked by the branch `swift_4` on this repository.
+
+[XCode 9 and Swift 4 support #20](https://github.com/Nirma/UIFontComplete/pull/20)
 
 ## Requirements
 

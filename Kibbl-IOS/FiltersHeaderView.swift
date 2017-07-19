@@ -204,14 +204,14 @@ class FilterHeaderCollectionReusableView: UICollectionReusableView, Reusable {
         filterButton.setBackgroundColor(color: Stylesheet.Colors.base, forState: .selected)
         
         filterButton.snp.makeConstraints { (make) -> Void in
-            make.edges.equalToSuperview().inset(20)
+            make.top.bottom.equalToSuperview().inset(20.calculateHeight())
+            make.left.right.equalToSuperview().inset(20.calculateWidth())
         }
         
         filterButton.layer.borderWidth = 1
         filterButton.layer.borderColor  = UIColor.lightGray.cgColor
         filterButton.cornerRadius = 6
         NotificationCenter.default.addObserver(self, selector: #selector(self.checkIsSelected), name: .filterChanged, object: nil)
-
         
         self.backgroundColor = .white
         

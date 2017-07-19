@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '7F95C160C203DE2005D3EF622835D498'
+               BlueprintIdentifier = '3F8C40EBCAF205BCC6FA2669450F7FCA'
                BlueprintName = 'UIFontComplete'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'UIFontComplete.framework'>

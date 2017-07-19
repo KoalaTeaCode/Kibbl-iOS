@@ -30,7 +30,7 @@ class CustomCollectionViewCell: UICollectionViewCell, Reusable {
     func setupConstraints() {
         self.addSubview(titleLabel)
         
-        titleLabel.font = UIFont.systemFont(ofSize: 14)
+        titleLabel.font = UIFont.systemFont(ofSize: 14.calculateWidth())
         titleLabel.adjustsFontSizeToFitWidth = false
         titleLabel.minimumScaleFactor = 0.25
         titleLabel.numberOfLines = 1

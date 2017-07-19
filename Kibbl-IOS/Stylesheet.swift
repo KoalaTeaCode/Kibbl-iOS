@@ -80,7 +80,7 @@ extension Stylesheet {
     
     static func applyOn(_ view: CircularTitleView) {
         view.titleLabel.textColor = Colors.white
-        view.titleLabel.font = UIFont(font: Fonts.Bold, size: 30)
+        view.titleLabel.font = UIFont(font: Fonts.Bold, size: 30.calculateWidth())
         
         view.labelView.backgroundColor = Colors.base
     }
@@ -95,9 +95,9 @@ extension Stylesheet {
         cell.dateLabel.textColor = context.detailTextColor
         cell.locationLabel.textColor = context.detailTextColor
         
-        cell.titleLabel.font = UIFont(font: Fonts.Regular, size: 16)
-        cell.dateLabel.font = UIFont(font: Fonts.Regular, size: 12)
-        cell.locationLabel.font = UIFont(font: Fonts.Regular, size: 12)
+        cell.titleLabel.font = UIFont(font: Fonts.Regular, size: 16.calculateWidth())
+        cell.dateLabel.font = UIFont(font: Fonts.Regular, size: 12.calculateWidth())
+        cell.locationLabel.font = UIFont(font: Fonts.Regular, size: 12.calculateWidth())
         
         cell.heartImageButton.tintColor = context.heartTintColor
     }
@@ -108,9 +108,9 @@ extension Stylesheet {
         cell.dateLabel.textColor = context.detailTextColor
         cell.locationLabel.textColor = context.detailTextColor
         
-        cell.titleLabel.font = UIFont(font: Fonts.Regular, size: 16)
-        cell.dateLabel.font = UIFont(font: Fonts.Regular, size: 12)
-        cell.locationLabel.font = UIFont(font: Fonts.Regular, size: 12)
+        cell.titleLabel.font = UIFont(font: Fonts.Regular, size: 16.calculateWidth())
+        cell.dateLabel.font = UIFont(font: Fonts.Regular, size: 12.calculateWidth())
+        cell.locationLabel.font = UIFont(font: Fonts.Regular, size: 12.calculateWidth())
         
         cell.heartImageButton.tintColor = context.heartTintColor
     }
@@ -121,9 +121,9 @@ extension Stylesheet {
         cell.dateLabel.textColor = context.detailTextColor
         cell.locationLabel.textColor = context.detailTextColor
         
-        cell.titleLabel.font = UIFont(font: Fonts.Regular, size: 16)
-        cell.dateLabel.font = UIFont(font: Fonts.Regular, size: 12)
-        cell.locationLabel.font = UIFont(font: Fonts.Regular, size: 12)
+        cell.titleLabel.font = UIFont(font: Fonts.Regular, size: 16.calculateWidth())
+        cell.dateLabel.font = UIFont(font: Fonts.Regular, size: 12.calculateWidth())
+        cell.locationLabel.font = UIFont(font: Fonts.Regular, size: 12.calculateWidth())
         
 //        cell.heartImageButton.tintColor = context.heartTintColor
         cell.followButton.setTitleColor(context.followTintColor, for: .normal)
@@ -136,9 +136,9 @@ extension Stylesheet {
         cell.dateLabel.textColor = context.detailTextColor
         cell.locationLabel.textColor = context.detailTextColor
         
-        cell.titleLabel.font = UIFont(font: Fonts.Regular, size: 16)
-        cell.descLabel.font = UIFont(font: Fonts.Regular, size: 12)
-        cell.locationLabel.font = UIFont(font: Fonts.Regular, size: 12)
+        cell.titleLabel.font = UIFont(font: Fonts.Regular, size: 16.calculateWidth())
+        cell.descLabel.font = UIFont(font: Fonts.Regular, size: 12.calculateWidth())
+        cell.locationLabel.font = UIFont(font: Fonts.Regular, size: 12.calculateWidth())
 //        cell.dateLabel.font = UIFont(font: Fonts.Regular, size: 12)
     }
     
@@ -148,9 +148,9 @@ extension Stylesheet {
         cell.descLabel.textColor = context.detailTextColor
         cell.locationLabel.textColor = context.detailTextColor
         
-        cell.titleLabel.font = UIFont(font: Fonts.Regular, size: 16)
-        cell.descLabel.font = UIFont(font: Fonts.Regular, size: 12)
-        cell.locationLabel.font = UIFont(font: Fonts.Regular, size: 12)
+        cell.titleLabel.font = UIFont(font: Fonts.Regular, size: 16.calculateWidth())
+        cell.descLabel.font = UIFont(font: Fonts.Regular, size: 12.calculateWidth())
+        cell.locationLabel.font = UIFont(font: Fonts.Regular, size: 12.calculateWidth())
         
         cell.heartImageButton.tintColor = context.heartTintColor
     }
@@ -160,9 +160,9 @@ extension Stylesheet {
         cell.titleLabel.textColor = context.titleTextColor
         cell.descLabel.textColor = context.detailTextColor
         
-        cell.titleLabel.font = UIFont(font: Fonts.Regular, size: 16)
-        cell.descLabel.font = UIFont(font: Fonts.Regular, size: 12)
-        cell.breedLabel.font = UIFont(font: Fonts.Regular, size: 12)
+        cell.titleLabel.font = UIFont(font: Fonts.Regular, size: 16.calculateWidth())
+        cell.descLabel.font = UIFont(font: Fonts.Regular, size: 12.calculateWidth())
+        cell.breedLabel.font = UIFont(font: Fonts.Regular, size: 12.calculateWidth())
         
         cell.heartImageButton.tintColor = context.heartTintColor
     }
@@ -172,9 +172,9 @@ extension Stylesheet {
         cell.titleLabel.textColor = context.titleTextColor
         cell.descLabel.textColor = context.detailTextColor
         
-        cell.titleLabel.font = UIFont(font: Fonts.Regular, size: 16)
-        cell.descLabel.font = UIFont(font: Fonts.Regular, size: 12)
-        cell.breedLabel.font = UIFont(font: Fonts.Regular, size: 12)
+        cell.titleLabel.font = UIFont(font: Fonts.Regular, size: 16.calculateWidth())
+        cell.descLabel.font = UIFont(font: Fonts.Regular, size: 12.calculateWidth())
+        cell.breedLabel.font = UIFont(font: Fonts.Regular, size: 12.calculateWidth())
         
         cell.heartImageButton.tintColor = context.heartTintColor
     }
@@ -182,37 +182,37 @@ extension Stylesheet {
     static func applyOn(_ cell: EventDetailDescTableViewCell) {
         typealias context = CellContexts.EventsCell
         
-        cell.titleLabel.font = UIFont(font: Fonts.Regular, size: 20)
-        cell.descLabel.font = UIFont(font: Fonts.Regular, size: 14)
+        cell.titleLabel.font = UIFont(font: Fonts.Regular, size: 20.calculateWidth())
+        cell.descLabel.font = UIFont(font: Fonts.Regular, size: 14.calculateWidth())
     }
     
     static func applyOn(_ cell: PetDetailDescTableViewCell) {
         typealias context = CellContexts.EventsCell
         
-        cell.titleLabel.font = UIFont(font: Fonts.Regular, size: 21)
-        cell.descLabel.font = UIFont(font: Fonts.Regular, size: 14)
-        cell.ageDescLabel.font = UIFont(font: Fonts.Regular, size: 16)
+        cell.titleLabel.font = UIFont(font: Fonts.Regular, size: 21.calculateWidth())
+        cell.descLabel.font = UIFont(font: Fonts.Regular, size: 14.calculateWidth())
+        cell.ageDescLabel.font = UIFont(font: Fonts.Regular, size: 16.calculateWidth())
         // Needs to be medium
-        cell.ageLabel.font = UIFont(font: Fonts.Regular, size: 12)
-        cell.breedDescLabel.font = UIFont(font: Fonts.Regular, size: 16)
+        cell.ageLabel.font = UIFont(font: Fonts.Regular, size: 12.calculateWidth())
+        cell.breedDescLabel.font = UIFont(font: Fonts.Regular, size: 16.calculateWidth())
         // Needs to be medium
-        cell.breedLabel.font = UIFont(font: Fonts.Regular, size: 12)
+        cell.breedLabel.font = UIFont(font: Fonts.Regular, size: 12.calculateWidth())
     }
     
     static func applyOn(_ cell: LocationTableViewCell) {
         typealias context = CellContexts.EventsCell
         
-        cell.locationNameLabel.font = UIFont(font: Fonts.Regular, size: 16)
-        cell.locationAddressLabel.font = UIFont(font: Fonts.Regular, size: 14)
-        cell.locationPhoneLabel.font = UIFont(font: Fonts.Regular, size: 14)
-        cell.locationEmailLabel.font = UIFont(font: Fonts.Regular, size: 14)
+        cell.locationNameLabel.font = UIFont(font: Fonts.Regular, size: 16.calculateWidth())
+        cell.locationAddressLabel.font = UIFont(font: Fonts.Regular, size: 14.calculateWidth())
+        cell.locationPhoneLabel.font = UIFont(font: Fonts.Regular, size: 14.calculateWidth())
+        cell.locationEmailLabel.font = UIFont(font: Fonts.Regular, size: 14.calculateWidth())
     }
     
     static func applyOn(_ cell: AddressTableViewCell) {
         typealias context = CellContexts.EventsCell
         
-        cell.locationNameLabel.font = UIFont(font: Fonts.Regular, size: 16)
-        cell.locationAddressLabel.font = UIFont(font: Fonts.Regular, size: 14)
+        cell.locationNameLabel.font = UIFont(font: Fonts.Regular, size: 16.calculateWidth())
+        cell.locationAddressLabel.font = UIFont(font: Fonts.Regular, size: 14.calculateWidth())
     }
     
     static func applyOn(_ viewController: ContainerViewController) {
@@ -220,8 +220,8 @@ extension Stylesheet {
         
         let segmentControl = viewController.layoutSegmentControl
         
-        segmentControl.titleFont = UIFont(name: "HelveticaNeue", size: 14.0)!
-        segmentControl.selectedTitleFont = UIFont(name: "HelveticaNeue-Medium", size: 14.0)!
+        segmentControl.titleFont = UIFont(name: "HelveticaNeue", size: 14.0.calculateWidth())!
+        segmentControl.selectedTitleFont = UIFont(name: "HelveticaNeue-Medium", size: 14.0.calculateWidth())!
         
         segmentControl.selectedTitleColor = Colors.white
         segmentControl.titleColor = Colors.offBlack
@@ -245,11 +245,11 @@ extension Stylesheet {
         let vTime = view.timeLabel
         
         // Light
-        vTitle.font = UIFont(font: Fonts.Regular, size: 20)
+        vTitle.font = UIFont(font: Fonts.Regular, size: 20.calculateWidth())
         // Bold
-        vDate.font = UIFont(font: Fonts.Regular, size: 16)
+        vDate.font = UIFont(font: Fonts.Regular, size: 16.calculateWidth())
         // Regular
-        vTime.font = UIFont(font: Fonts.Regular, size: 16)
+        vTime.font = UIFont(font: Fonts.Regular, size: 16.calculateWidth())
         
         vTitle.textColor = context.TextColor
         vDate.textColor = context.TextColor

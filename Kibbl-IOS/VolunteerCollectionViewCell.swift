@@ -137,19 +137,19 @@ class VolunteerCollectionViewCell: UICollectionViewCell, Reusable {
     
     func setupLabels() {
         titleLabel.text = "Cat Care Specialist"
-        titleLabel.font = UIFont.boldSystemFont(ofSize: 30)
+        titleLabel.font = UIFont.boldSystemFont(ofSize: 30.calculateWidth())
         titleLabel.adjustsFontSizeToFitWidth = true
         titleLabel.minimumScaleFactor = 0.25
         titleLabel.numberOfLines = 1
         
         descLabel.text = "We are looking for cat lovers for a weekly or every other week commitment. Duties include feeding and care of cats…"
-        descLabel.font = UIFont.boldSystemFont(ofSize: 30)
+        descLabel.font = UIFont.boldSystemFont(ofSize: 30.calculateWidth())
         descLabel.adjustsFontSizeToFitWidth = false
         descLabel.minimumScaleFactor = 0.25
         descLabel.numberOfLines = 0
         
         locationLabel.text = "Lorain County Animal Shelter"
-        locationLabel.font = UIFont.boldSystemFont(ofSize: 30)
+        locationLabel.font = UIFont.boldSystemFont(ofSize: 30.calculateWidth())
         locationLabel.adjustsFontSizeToFitWidth = true
         locationLabel.minimumScaleFactor = 0.25
         locationLabel.numberOfLines = 1
@@ -160,7 +160,7 @@ class VolunteerCollectionViewCell: UICollectionViewCell, Reusable {
         pinImageView.contentMode = .scaleAspectFill
         pinImageView.image = #imageLiteral(resourceName: "Pin")
         
-        commentImageButton.setImage(#imageLiteral(resourceName: "Comment"), for: .normal)
+//        commentImageButton.setImage(#imageLiteral(resourceName: "Comment"), for: .normal)
         commentImageButton.imageView?.contentMode = .scaleAspectFit
         commentImageButton.addTarget(self, action: #selector(self.commentPressed), for: .touchUpInside)
         

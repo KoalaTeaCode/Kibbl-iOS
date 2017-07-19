@@ -37,6 +37,8 @@ class EventTableViewCell: UITableViewCell, Reusable {
     }
     
     func setupConstraints() {
+        self.contentView.addSubview(leftImageContentView)
+        self.leftImageContentView.addSubview(titleView)
         self.contentView.addSubview(labelContentView)
         self.labelContentView.addSubview(titleLabel)
         self.labelContentView.addSubview(dateLabel)
@@ -45,9 +47,7 @@ class EventTableViewCell: UITableViewCell, Reusable {
         self.rightImageContentView.addSubview(commentImageButton)
         self.rightImageContentView.addSubview(heartImageButton)
         
-        self.contentView.addSubview(leftImageContentView)
         
-        self.leftImageContentView.addSubview(titleView)
         
         contentView.backgroundColor = .white
         
@@ -55,8 +55,7 @@ class EventTableViewCell: UITableViewCell, Reusable {
         
         leftImageContentView.snp.makeConstraints { (make) -> Void in
             make.height.equalToSuperview()
-            make.width.equalTo(contentView.width / 4)
-            
+            make.width.equalTo(93.75.calculateWidth())
             make.left.equalToSuperview()
             make.centerY.equalToSuperview()
         }
@@ -65,7 +64,7 @@ class EventTableViewCell: UITableViewCell, Reusable {
         
         rightImageContentView.snp.makeConstraints { (make) -> Void in
             make.height.equalToSuperview().dividedBy(labelHeightDivisor)
-            make.width.equalTo(contentView.width / 3.5)
+            make.width.equalTo(107.15.calculateWidth())
             
             make.right.equalToSuperview()
             make.bottom.equalToSuperview()
@@ -126,27 +125,27 @@ class EventTableViewCell: UITableViewCell, Reusable {
     
     func setupLabels() {
         titleLabel.text = "Pets n More Adoption Drive"
-        titleLabel.font = UIFont.boldSystemFont(ofSize: 30)
+        titleLabel.font = UIFont.boldSystemFont(ofSize: 30.calculateWidth())
         titleLabel.adjustsFontSizeToFitWidth = false
         titleLabel.minimumScaleFactor = 0.25
         titleLabel.numberOfLines = 1
         titleLabel.lineBreakMode = .byTruncatingTail
         
         dateLabel.text = "March 28—31, 10:00 AM—5:00 PM"
-        dateLabel.font = UIFont.boldSystemFont(ofSize: 30)
+        dateLabel.font = UIFont.boldSystemFont(ofSize: 30.calculateWidth())
         dateLabel.adjustsFontSizeToFitWidth = true
         dateLabel.minimumScaleFactor = 0.25
         dateLabel.numberOfLines = 1
         
         locationLabel.text = "Baton Rouge, LA"
-        locationLabel.font = UIFont.boldSystemFont(ofSize: 30)
+        locationLabel.font = UIFont.boldSystemFont(ofSize: 30.calculateWidth())
         locationLabel.adjustsFontSizeToFitWidth = true
         locationLabel.minimumScaleFactor = 0.25
         locationLabel.numberOfLines = 1
     }
     
     func setupImages() {
-        commentImageButton.setImage(#imageLiteral(resourceName: "Comment"), for: .normal)
+//        commentImageButton.setImage(#imageLiteral(resourceName: "Comment"), for: .normal)
         commentImageButton.imageView?.contentMode = .scaleAspectFit
         commentImageButton.addTarget(self, action: #selector(self.commentPressed), for: .touchUpInside)
         

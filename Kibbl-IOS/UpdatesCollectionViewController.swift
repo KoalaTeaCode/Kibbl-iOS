@@ -29,7 +29,8 @@ class UpdatesCollectionViewController: UICollectionViewController {
         
         self.collectionView?.register(cellType: UpdatesCollectionViewCell.self)
         
-        let layout = KoalaTeaFlowLayout(ratio: 0.264, topBottomMargin: 0, leftRightMargin: 0, cellsAcross: 1, cellSpacing: 0, collectionViewHeight: self.view.height)
+        let ratio = 99.calculateHeight() / UIScreen.main.bounds.width
+        let layout = KoalaTeaFlowLayout(ratio: ratio, topBottomMargin: 0, leftRightMargin: 0, cellsAcross: 1, cellSpacing: 0, collectionViewHeight: self.view.height)
         self.collectionView?.collectionViewLayout = layout
         
         self.collectionView?.backgroundColor = Stylesheet.Colors.white

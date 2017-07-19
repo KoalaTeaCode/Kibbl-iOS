@@ -87,6 +87,7 @@ class API {
                     log.error(message)
                     Tracker.logLoginError(string: String(describing: message))
                     Helpers.alertWithMessage(title: Helpers.Alerts.error, message: String(describing: message), completionHandler: nil)
+                    completion(false)
                     return
                 }
                 
@@ -95,7 +96,6 @@ class API {
                     user.email = email
                     user.token = token as? String
                     user.save()
-                    completion(true)
                     
                     Tracker.logLogin(user: user)
                     
@@ -104,11 +104,14 @@ class API {
                         API.sharedInstance.setPushNotifications(to: true, deviceToken: deviceToken)
                     }
                     API.sharedInstance.loadLoggedInData()
+                    
+                    completion(true)
                 }
             case .failure(let error):
                 log.error(error)
                 Tracker.logLoginError(error: error)
                 Helpers.alertWithMessage(title: Helpers.Alerts.error, message: error.localizedDescription, completionHandler: nil)
+                completion(false)
             }
         }
     }

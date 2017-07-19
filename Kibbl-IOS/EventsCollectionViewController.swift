@@ -33,7 +33,8 @@ class EventsCollectionViewController: UICollectionViewController {
         self.collectionView?.register(cellType: EventsCollectionViewCell.self)
         self.collectionView?.register(supplementaryViewType: FilterHeaderCollectionReusableView.self, ofKind: UICollectionElementKindSectionHeader)
         
-        let layout = KoalaTeaFlowLayout(ratio: 0.264, topBottomMargin: 0, leftRightMargin: 0, cellsAcross: 1, cellSpacing: 0)
+        let ratio = 99.calculateHeight() / UIScreen.main.bounds.width
+        let layout = KoalaTeaFlowLayout(ratio: ratio, topBottomMargin: 0, leftRightMargin: 0, cellsAcross: 1, cellSpacing: 0)
         self.collectionView?.collectionViewLayout = layout
         
         self.collectionView?.showsVerticalScrollIndicator = false

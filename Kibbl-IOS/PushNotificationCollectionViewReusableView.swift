@@ -40,7 +40,7 @@ class PushNotificationCollectionViewReusableView: UICollectionReusableView, Reus
             make.top.bottom.equalToSuperview().inset(10)
         }
         
-        titleLabel.font = UIFont.systemFont(ofSize: 16)
+        titleLabel.font = UIFont.systemFont(ofSize: 16.calculateWidth())
         titleLabel.adjustsFontSizeToFitWidth = false
         titleLabel.minimumScaleFactor = 0.25
         titleLabel.numberOfLines = 1

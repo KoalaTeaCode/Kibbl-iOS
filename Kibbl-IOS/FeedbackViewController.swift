@@ -46,7 +46,7 @@ class FeedbackViewController: UIViewController {
         logoImageview.contentMode = .scaleAspectFit
         
         descriptionLabel.text = "Have feedback for us?" + "\n" + "We love to hear!" + "\n" + "Just contact us at:"
-        descriptionLabel.font = UIFont.systemFont(ofSize: 26)
+        descriptionLabel.font = UIFont.systemFont(ofSize: 26.calculateWidth())
         descriptionLabel.adjustsFontSizeToFitWidth = false
         descriptionLabel.minimumScaleFactor = 0.25
         descriptionLabel.numberOfLines = 0
@@ -61,7 +61,7 @@ class FeedbackViewController: UIViewController {
         }
 
         urlLabel.text = "admin@kibbl.io"
-        urlLabel.font = UIFont.systemFont(ofSize: 30)
+        urlLabel.font = UIFont.systemFont(ofSize: 30.calculateWidth())
         urlLabel.adjustsFontSizeToFitWidth = false
         urlLabel.minimumScaleFactor = 0.25
         urlLabel.numberOfLines = 1

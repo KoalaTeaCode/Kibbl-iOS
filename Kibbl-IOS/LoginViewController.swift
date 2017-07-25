@@ -89,6 +89,7 @@ class LoginViewController: UIViewController {
         setupTextFields()
         setupButtons()
     }
+
     private func setupTopBottomViews() {
         self.view.addSubview(topView)
         self.view.addSubview(bottomView)
@@ -127,6 +128,18 @@ class LoginViewController: UIViewController {
             make.left.right.equalToSuperview()
             make.bottom.equalTo(facebookButton)
         }
+    }
+    
+    private func moveSignUpButtonAboveLogin() {
+        let loginButtonOriginalPosition = 4;
+        self.stackView.removeArrangedSubview(loginButton)
+        self.stackView.insertArrangedSubview(signUpButton, at: loginButtonOriginalPosition + 1)
+    }
+    
+    private func moveLoginButtonAboveSignIn() {
+        let loginButtonOriginalPosition = 4;
+        self.stackView.removeArrangedSubview(signUpButton)
+        self.stackView.insertArrangedSubview(loginButton, at: loginButtonOriginalPosition + 1)
     }
     
     private func setupImageview() {
@@ -251,6 +264,7 @@ class LoginViewController: UIViewController {
     
     func loginButtonPressed() {
         passwordConfirmTextField.isHidden = true
+        moveLoginButtonAboveSignIn()
 //        firstNameTextField.isHidden = true
 //        lastNameTextField.isHidden = true
         
@@ -293,6 +307,7 @@ class LoginViewController: UIViewController {
     func signUpButtonPressed() {
         if passwordConfirmTextField.isHidden == true {
             passwordConfirmTextField.isHidden = false
+            moveSignUpButtonAboveLogin()
 //            firstNameTextField.isHidden = false
 //            lastNameTextField.isHidden = false
             return

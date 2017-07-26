@@ -42,11 +42,11 @@ class LoginViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.navigationBar?.setColors(background: Stylesheet.Colors.base, text: Stylesheet.Colors.white)
+        self.navigationBar?.setColors(background: Stylesheet.Colors.base!, text: Stylesheet.Colors.white!)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        self.navigationBar?.setColors(background: Stylesheet.Colors.white, text: Stylesheet.Colors.base)
+        self.navigationBar?.setColors(background: Stylesheet.Colors.white!, text: Stylesheet.Colors.base!)
     }
 
     override func didReceiveMemoryWarning() {
@@ -133,13 +133,18 @@ class LoginViewController: UIViewController {
     private func moveSignUpButtonAboveLogin() {
         let loginButtonOriginalPosition = 4;
         self.stackView.removeArrangedSubview(loginButton)
-        self.stackView.insertArrangedSubview(signUpButton, at: loginButtonOriginalPosition + 1)
+        self.stackView.removeArrangedSubview(signUpButton)
+        self.stackView.insertArrangedSubview(signUpButton, at: loginButtonOriginalPosition - 1)
+        self.stackView.insertArrangedSubview(loginButton, at: loginButtonOriginalPosition)
     }
     
     private func moveLoginButtonAboveSignIn() {
         let loginButtonOriginalPosition = 4;
+        self.stackView.removeArrangedSubview(loginButton)
         self.stackView.removeArrangedSubview(signUpButton)
-        self.stackView.insertArrangedSubview(loginButton, at: loginButtonOriginalPosition + 1)
+        self.stackView.insertArrangedSubview(loginButton, at: loginButtonOriginalPosition)
+        self.stackView.insertArrangedSubview(signUpButton, at: loginButtonOriginalPosition + 1)
+        self.stackView.insertArrangedSubview(facebookButton, at: loginButtonOriginalPosition + 2)
     }
     
     private func setupImageview() {
@@ -244,13 +249,13 @@ class LoginViewController: UIViewController {
         
         loginButton.setTitle("Login", for: .normal)
         loginButton.setTitleColor(Stylesheet.Colors.white, for: .normal)
-        loginButton.setBackgroundColor(color: Stylesheet.Colors.dark2, forState: .normal)
+        loginButton.setBackgroundColor(color: Stylesheet.Colors.dark2!, forState: .normal)
         loginButton.addTarget(self, action: #selector(self.loginButtonPressed), for: .touchUpInside)
         loginButton.cornerRadius = 14
         
         signUpButton.setTitle("Sign Up", for: .normal)
         signUpButton.setTitleColor(Stylesheet.Colors.white, for: .normal)
-        signUpButton.setBackgroundColor(color: Stylesheet.Colors.dark2, forState: .normal)
+        signUpButton.setBackgroundColor(color: Stylesheet.Colors.dark2!, forState: .normal)
         signUpButton.addTarget(self, action: #selector(self.signUpButtonPressed), for: .touchUpInside)
         signUpButton.cornerRadius = 14
         
@@ -263,8 +268,12 @@ class LoginViewController: UIViewController {
     }
     
     func loginButtonPressed() {
-        passwordConfirmTextField.isHidden = true
-        moveLoginButtonAboveSignIn()
+        if (passwordConfirmTextField.isHidden  == false) {
+            passwordConfirmTextField.isHidden = true
+            moveLoginButtonAboveSignIn()
+            return
+        }
+        
 //        firstNameTextField.isHidden = true
 //        lastNameTextField.isHidden = true
         

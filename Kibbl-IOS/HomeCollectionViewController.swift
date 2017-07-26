@@ -75,7 +75,6 @@ class HomeCollectionViewController: UICollectionViewController {
     func loadData() {
         let when = DispatchTime.now() + 2 // change 2 to desired number of seconds
         DispatchQueue.main.asyncAfter(deadline: when) {
-            log.info("THIS")
             PetModel.getLatest(completionHandler: { (result: Array<PetModel>) in
                 self.pets = result
                 self.collectionView?.reloadData()

@@ -12,21 +12,59 @@ import UIFontComplete
 // MARK: - Stylesheet
 enum Stylesheet {
     
+    struct MyTheme {
+        static var firstColor: UIColor { return UIColor(red: 1, green: 0, blue: 0, alpha: 1) }
+        static var secondColor: UIColor { return UIColor(red: 0, green: 1, blue: 0, alpha: 1) }
+    }
+    
     enum Colors {
-        static let white = UIColor(hex: 0xFFFFFF)
-        static let gray = UIColor(hex: 0xD6D4D2)
-        static let offBlack = UIColor(hex: 0x262626)
-        static let offWhite = UIColor(hex: 0xF9F9F9)
-        static let clear = UIColor.clear
+        static var white: UIColor {
+            guard let color = UIColor(hex: 0xFFFFFF) else { return UIColor.white }
+            return color
+        }
+        static var gray: UIColor {
+            guard let color = UIColor(hex: 0xD6D4D2) else { return UIColor.white }
+            return color
+        }
+        static var offBlack: UIColor {
+            guard let color = UIColor(hex: 0x262626) else { return UIColor.white }
+            return color
+        }
+        static var offWhite: UIColor {
+            guard let color = UIColor(hex: 0xF9F9F9) else { return UIColor.white }
+            return color
+        }
+        static var clear: UIColor = UIColor.clear
         
-        static let blackText = UIColor(hex: 0x36322E)
-        static let grayText = UIColor(hex: 0x979390)
+        static var blackText: UIColor {
+            guard let color = UIColor(hex: 0x36322E) else { return UIColor.white }
+            return color
+        }
+        static var grayText: UIColor {
+            guard let color = UIColor(hex: 0x979390) else { return UIColor.white }
+            return color
+        }
         
-        static let base = UIColor(hex: 0xFF9933)
-        static let light1 = UIColor(hex: 0xFFC082)
-        static let light2 = UIColor(hex: 0xFFAB58)
-        static let dark1 = UIColor(hex: 0xE77607)
-        static let dark2 = UIColor(hex: 0xB25800)
+        static var base: UIColor {
+            guard let color = UIColor(hex: 0xFF9933) else { return UIColor.white }
+            return color
+        }
+        static var light1: UIColor {
+            guard let color = UIColor(hex: 0xFFC082) else { return UIColor.white }
+            return color
+        }
+        static var light2: UIColor {
+            guard let color = UIColor(hex: 0xFFAB58) else { return UIColor.white }
+            return color
+        }
+        static var dark1: UIColor {
+            guard let color = UIColor(hex: 0xE77607) else { return UIColor.white }
+            return color
+        }
+        static var dark2: UIColor {
+            guard let color = UIColor(hex: 0xB25800) else { return UIColor.white }
+            return color
+        }
     }
     
     enum Fonts {

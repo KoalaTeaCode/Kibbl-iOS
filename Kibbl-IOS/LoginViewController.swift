@@ -62,8 +62,7 @@ class LoginViewController: UIViewController {
         if User.getActiveUser()?.isLoggedIn() != false {
             HUD.show(.systemActivity)
             // If so move on to the next screen
-            let vc = CustomTabViewController()
-            self.navigationController?.pushViewController(vc, animated: true)
+            self.navigationController?.popViewController()
         }
     }
     
@@ -385,10 +384,9 @@ class LoginViewController: UIViewController {
                 HUD.hide()
                 return
             }
-            
-            // Completed so present Tab controller
-            let vc = CustomTabViewController()
-            self.navigationController?.pushViewController(vc, animated: true)
+            HUD.hide({ _ in
+                self.navigationController?.popViewController()
+            })
         })
     }
 }
@@ -409,10 +407,9 @@ extension LoginViewController: LoginButtonDelegate {
                     HUD.hide()
                     return
                 }
-                
-                // Completed so present Tab controller
-                let vc = CustomTabViewController()
-                self.navigationController?.pushViewController(vc, animated: true)
+                HUD.hide({ _ in
+                    self.navigationController?.popViewController()
+                })
             })
         }
     }

@@ -26,6 +26,10 @@ class LeftViewController: UIViewController {
         setupTableView()
         setupLogoutButton()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        setupLogoutButton()
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

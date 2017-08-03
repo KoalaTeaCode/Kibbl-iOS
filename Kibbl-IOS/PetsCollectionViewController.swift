@@ -22,7 +22,9 @@ class PetsCollectionViewController: UICollectionViewController {
     
     let pageSize = 20
     let preloadMargin = 5
+    
     var lastLoadedPage = 0
+    var itemCount = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,34 +62,7 @@ class PetsCollectionViewController: UICollectionViewController {
         data = PetModel.getAllWithFilters().sorted(byKeyPath: "lastUpdate", ascending: false)
         registerNotifications()
     }
-    
-    func registerNotifications() {
-        token = data.addNotificationBlock {[weak self] (changes: RealmCollectionChange) in
-            guard let collectionView = self?.collectionView else { return }
-            
-            switch changes {
-            case .initial:
-                collectionView.reloadData()
-                break
-            case .update(_, let deletions, let insertions, let modifications):
-                let deleteIndexPaths = deletions.map { IndexPath(item: $0, section: 0) }
-                let insertIndexPaths = insertions.map { IndexPath(item: $0, section: 0) }
-                let updateIndexPaths = modifications.map { IndexPath(item: $0, section: 0) }
-                
-                self?.collectionView?.performBatchUpdates({
-                    self?.collectionView?.deleteItems(at: deleteIndexPaths)
-                    self?.collectionView?.insertItems(at: insertIndexPaths)
-                    self?.collectionView?.reloadItems(at: updateIndexPaths)
-                }, completion: nil)
-                break
-            case .error(let error):
-                print(error)
-                break
-            }
-        }
-    }
-    
-    
+
     // MARK: - Data stuff
     
     func getData(page: Int = 0, lastItemDate: String = "") {
@@ -101,14 +76,13 @@ class PetsCollectionViewController: UICollectionViewController {
         return 1
     }
     
-    
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
         if !data.isEmpty {
-            if data.count < 20 {
+            if itemCount < 20 {
                 self.getData()
             }
-            return data.count
+            return itemCount
         }
         self.getData()
         return 0
@@ -161,5 +135,40 @@ class PetsCollectionViewController: UICollectionViewController {
         vc.pet = item
         
         self.navigationController?.pushViewController(vc)
+    }
+}
+
+
+extension PetsCollectionViewController {
+    // MARK: Realm
+    func registerNotifications() {
+        token = data.addNotificationBlock {[weak self] (changes: RealmCollectionChange) in
+            guard let collectionView = self?.collectionView else { return }
+            
+            switch changes {
+            case .initial:
+                guard let int = self?.data.count else { return }
+                self?.itemCount = int
+                collectionView.reloadData()
+                break
+            case .update(_, let deletions, let insertions, let modifications):
+                guard let int = self?.data.count else { return }
+                self?.itemCount = int
+                
+                let deleteIndexPaths = deletions.map { IndexPath(item: $0, section: 0) }
+                let insertIndexPaths = insertions.map { IndexPath(item: $0, section: 0) }
+                let updateIndexPaths = modifications.map { IndexPath(item: $0, section: 0) }
+                
+                self?.collectionView?.performBatchUpdates({
+                    self?.collectionView?.deleteItems(at: deleteIndexPaths)
+                    self?.collectionView?.insertItems(at: insertIndexPaths)
+                    self?.collectionView?.reloadItems(at: updateIndexPaths)
+                }, completion: nil)
+                break
+            case .error(let error):
+                print(error)
+                break
+            }
+        }
     }
 }

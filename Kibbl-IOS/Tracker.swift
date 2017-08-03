@@ -151,10 +151,9 @@ class Tracker {
     }
     
     class func logLogin(user: User) {
-        Answers.logCustomEvent(withName: "Login",
-                               customAttributes:
+        Answers.logLogin(withMethod: "Kibble_API", success: 1, customAttributes:
             [
-                "username": user.email
+            "username": user.email
             ]
         )
     }
@@ -169,10 +168,9 @@ class Tracker {
     }
     
     class func logFacebookLogin(user: User) {
-        Answers.logCustomEvent(withName: "Facebook_Login",
-                               customAttributes:
+        Answers.logLogin(withMethod: "Facebook", success: 1, customAttributes:
             [
-                "username": user.email
+            "username": user.email
             ]
         )
     }
@@ -182,8 +180,7 @@ extension Tracker {
     //MARK: errors
     
     class func logLoginError(error: Error) {
-        Answers.logCustomEvent(withName: "Error_Login",
-                               customAttributes:
+        Answers.logLogin(withMethod: "Kibble_API", success: 0, customAttributes:
             [
                 "error": error.localizedDescription
             ]
@@ -191,8 +188,7 @@ extension Tracker {
     }
     
     class func logLoginError(string: String) {
-        Answers.logCustomEvent(withName: "Error_Login",
-                               customAttributes:
+        Answers.logLogin(withMethod: "Kibble_API", success: 0, customAttributes:
             [
                 "error": string
             ]
@@ -218,8 +214,7 @@ extension Tracker {
     }
     
     class func logFacebookLoginError(error: Error) {
-        Answers.logCustomEvent(withName: "Error_Facebook_Login",
-                               customAttributes:
+        Answers.logLogin(withMethod: "Facebook_Login", success: 0, customAttributes:
             [
                 "error": error.localizedDescription
             ]

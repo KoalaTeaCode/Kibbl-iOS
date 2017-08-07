@@ -159,8 +159,7 @@ class Tracker {
     }
     
     class func logRegister(user: User) {
-        Answers.logCustomEvent(withName: "Register",
-                               customAttributes:
+        Answers.logSignUp(withMethod: "Kibble_API", success: 1, customAttributes:
             [
                 "username": user.email
             ]
@@ -196,8 +195,7 @@ extension Tracker {
     }
     
     class func logRegisterError(error: Error) {
-        Answers.logCustomEvent(withName: "Error_Register",
-                               customAttributes:
+        Answers.logSignUp(withMethod: "Kibble_API", success: 0, customAttributes:
             [
                 "error": error.localizedDescription
             ]
@@ -205,8 +203,7 @@ extension Tracker {
     }
     
     class func logRegisterError(string: String) {
-        Answers.logCustomEvent(withName: "Error_Register",
-                               customAttributes:
+        Answers.logSignUp(withMethod: "Kibble_API", success: 0, customAttributes:
             [
                 "error": string
             ]

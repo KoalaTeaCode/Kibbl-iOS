@@ -261,7 +261,7 @@ extension AppDelegate : MessagingDelegate {
 extension AppDelegate {
     func deleteOldRealmObjects() {
         let realm = try! Realm()
-        
+        log.debug("DELETing")
         try! realm.write {
             realm.delete(EventModel.all().filter("favorited = false"))
             realm.delete(PetModel.all().filter("favorited = false"))

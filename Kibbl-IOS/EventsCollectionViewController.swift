@@ -21,7 +21,9 @@ class EventsCollectionViewController: UICollectionViewController {
     
     let pageSize = 20
     let preloadMargin = 5
+    
     var lastLoadedPage = 0
+    var itemCount = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -64,33 +66,6 @@ class EventsCollectionViewController: UICollectionViewController {
         registerNotifications()
     }
     
-    func registerNotifications() {
-        token = data.addNotificationBlock {[weak self] (changes: RealmCollectionChange) in
-            guard let collectionView = self?.collectionView else { return }
-            
-            switch changes {
-            case .initial:
-                collectionView.reloadData()
-                break
-            case .update(_, let deletions, let insertions, let modifications):
-                let deleteIndexPaths = deletions.map { IndexPath(item: $0, section: 0) }
-                let insertIndexPaths = insertions.map { IndexPath(item: $0, section: 0) }
-                let updateIndexPaths = modifications.map { IndexPath(item: $0, section: 0) }
-                
-                self?.collectionView?.performBatchUpdates({
-                    self?.collectionView?.deleteItems(at: deleteIndexPaths)
-                    self?.collectionView?.insertItems(at: insertIndexPaths)
-                    self?.collectionView?.reloadItems(at: updateIndexPaths)
-                }, completion: nil)
-                break
-            case .error(let error):
-                print(error)
-                break
-            }
-        }
-    }
-    
-    
     // MARK: - Data stuff
     
     func getData(page: Int = 0, lastItemDate: String = "") {
@@ -108,10 +83,10 @@ class EventsCollectionViewController: UICollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
         if !data.isEmpty {
-            if data.count < 20 {
+            if itemCount < 20 {
                 self.getData()
             }
-            return data.count
+            return itemCount
         }
         self.getData()
         return 0
@@ -160,36 +135,38 @@ class EventsCollectionViewController: UICollectionViewController {
         vc.event = item
         self.navigationController?.pushViewController(vc)
     }
-    
-    // MARK: UICollectionViewDelegate
-    
-    /*
-     // Uncomment this method to specify if the specified item should be highlighted during tracking
-     override func collectionView(collectionView: UICollectionView, shouldHighlightItemAtIndexPath indexPath: NSIndexPath) -> Bool {
-     return true
-     }
-     */
-    
-    /*
-     // Uncomment this method to specify if the specified item should be selected
-     override func collectionView(collectionView: UICollectionView, shouldSelectItemAtIndexPath indexPath: NSIndexPath) -> Bool {
-     return true
-     }
-     */
-    
-    /*
-     // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-     override func collectionView(collectionView: UICollectionView, shouldShowMenuForItemAtIndexPath indexPath: NSIndexPath) -> Bool {
-     return false
-     }
-     
-     override func collectionView(collectionView: UICollectionView, canPerformAction action: Selector, forItemAtIndexPath indexPath: NSIndexPath, withSender sender: AnyObject?) -> Bool {
-     return false
-     }
-     
-     override func collectionView(collectionView: UICollectionView, performAction action: Selector, forItemAtIndexPath indexPath: NSIndexPath, withSender sender: AnyObject?) {
-     
-     }
-     */
-    
+}
+
+extension EventsCollectionViewController {
+    // MARK: Realm
+    func registerNotifications() {
+        token = data.addNotificationBlock {[weak self] (changes: RealmCollectionChange) in
+            guard let collectionView = self?.collectionView else { return }
+            
+            switch changes {
+            case .initial:
+                guard let int = self?.data.count else { return }
+                self?.itemCount = int
+                collectionView.reloadData()
+                break
+            case .update(_, let deletions, let insertions, let modifications):
+                guard let int = self?.data.count else { return }
+                self?.itemCount = int
+                
+                let deleteIndexPaths = deletions.map { IndexPath(item: $0, section: 0) }
+                let insertIndexPaths = insertions.map { IndexPath(item: $0, section: 0) }
+                let updateIndexPaths = modifications.map { IndexPath(item: $0, section: 0) }
+                
+                self?.collectionView?.performBatchUpdates({
+                    self?.collectionView?.deleteItems(at: deleteIndexPaths)
+                    self?.collectionView?.insertItems(at: insertIndexPaths)
+                    self?.collectionView?.reloadItems(at: updateIndexPaths)
+                }, completion: nil)
+                break
+            case .error(let error):
+                print(error)
+                break
+            }
+        }
+    }
 }

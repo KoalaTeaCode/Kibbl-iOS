@@ -29,10 +29,7 @@ class HomeCollectionViewController: UICollectionViewController {
     var filterTopView: FilterHeaderView!
     
     override func viewDidLoad() {
-        super.viewDidLoad()
-        //@tODO: Check if window key visible
-//        HUD.show(.systemActivity)
-        
+        super.viewDidLoad()        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
         
@@ -78,17 +75,14 @@ class HomeCollectionViewController: UICollectionViewController {
             PetModel.getLatest(completionHandler: { (result: Array<PetModel>) in
                 self.pets = result
                 self.collectionView?.reloadData()
-                HUD.hide()
             })
             EventModel.getLatest(completionHandler: { (result: Array<EventModel>) in
                 self.events = result
                 self.collectionView?.reloadData()
-                HUD.hide()
             })
             ShelterModel.getLatest(completionHandler: { (result: Array<ShelterModel>) in
                 self.shelters = result
                 self.collectionView?.reloadData()
-                HUD.hide()
             })
         }
     }

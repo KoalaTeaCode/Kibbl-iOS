@@ -39,6 +39,11 @@ class LoginViewController: UIViewController {
         
         performLayout()
         self.view.backgroundColor = Stylesheet.Colors.base
+        
+        if User.getActiveUser()?.isLoggedIn() != false {
+            // If so move on to the next screen
+            self.navigationController?.popViewController()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -56,14 +61,6 @@ class LoginViewController: UIViewController {
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
-    }
-    
-    override func viewDidLayoutSubviews() {
-        if User.getActiveUser()?.isLoggedIn() != false {
-            HUD.show(.systemActivity)
-            // If so move on to the next screen
-            self.navigationController?.popViewController()
-        }
     }
     
     private func performLayout() {

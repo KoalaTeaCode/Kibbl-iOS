@@ -66,6 +66,7 @@ class EventDetailTableViewController: UITableViewController {
             // Configure the cell...
             
             cell.setupCell(event: event)
+            cell.fromVC = self
             
             return cell
         case 1:

@@ -25,7 +25,7 @@ class PetsCollectionViewController: UICollectionViewController {
     
     var lastLoadedPage = 0
     var itemCount = 0
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -50,8 +50,9 @@ class PetsCollectionViewController: UICollectionViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        let parentVC = self.parent as! CustomTabViewController
-        parentVC.setChildCollectionView(to: self.collectionView!)
+        if let parentVC = self.parent as? CustomTabViewController {
+            parentVC.setChildCollectionView(to: self.collectionView!)
+        }
         
         registerNotifications()
         
@@ -100,7 +101,6 @@ class PetsCollectionViewController: UICollectionViewController {
         let preloadIndex = nextPage * pageSize - preloadMargin
         
         if (indexPath.item >= preloadIndex && lastLoadedPage < nextPage) || indexPath == collectionView.indexPathForLastItem {
-//            print("get next page : \(nextPage)")
             if let lastDate = item.lastUpdate {
                 getData(page: nextPage, lastItemDate: lastDate)
             }

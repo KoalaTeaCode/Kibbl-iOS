@@ -25,6 +25,11 @@ class EventDetailDescTableViewCell: UITableViewCell, Reusable {
     var eventModel: EventModel!
     var shelterModel: ShelterModel!
     
+    var viewPetsButton = UIButton()
+    var viewEventsButton = UIButton()
+    
+    var fromVC: UIViewController!
+    
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
@@ -35,6 +40,8 @@ class EventDetailDescTableViewCell: UITableViewCell, Reusable {
             descLabel,
             ]
         
+        self.containerView.addSubview(viewPetsButton)
+        self.containerView.addSubview(viewEventsButton)
         self.containerView.addSubview(followButton)
         self.containerView.addSubviews(views)
         self.containerView.addSubview(contactButton)
@@ -60,6 +67,30 @@ class EventDetailDescTableViewCell: UITableViewCell, Reusable {
             make.width.equalTo(80.calculateWidth())
             make.height.equalTo(36.calculateHeight())
         }
+        
+        viewPetsButton.snp.makeConstraints { (make) -> Void in
+            make.top.equalToSuperview().offset(12)
+            make.left.equalToSuperview()
+            make.width.equalTo(120.calculateWidth())
+            make.height.equalTo(36.calculateHeight())
+        }
+        
+        viewEventsButton.snp.makeConstraints { (make) -> Void in
+            make.top.equalToSuperview().offset(12)
+            make.left.equalTo(viewPetsButton.snp.right).inset(-10.calculateWidth())
+            make.width.equalTo(120.calculateWidth())
+            make.height.equalTo(36.calculateHeight())
+        }
+        
+        viewPetsButton.setTitle("View Pets", for: .normal)
+        viewPetsButton.setBackgroundColor(color: Stylesheet.Colors.base, forState: .normal)
+        viewPetsButton.addTarget(self, action: #selector(self.viewPetsButtonPressed), for: .touchUpInside)
+        viewPetsButton.cornerRadius = 8.calculateHeight()
+        
+        viewEventsButton.setTitle("View Events", for: .normal)
+        viewEventsButton.setBackgroundColor(color: Stylesheet.Colors.base, forState: .normal)
+        viewEventsButton.addTarget(self, action: #selector(self.viewEventsButtonPressed), for: .touchUpInside)
+        viewEventsButton.cornerRadius = 8.calculateHeight()
         
         titleLabel.snp.makeConstraints { (make) -> Void in
             make.top.equalTo(followButton.snp.bottom).offset(12)
@@ -181,6 +212,7 @@ class EventDetailDescTableViewCell: UITableViewCell, Reusable {
     
     
     func setupCell(event item: EventModel) {
+        self.shelterModel = item.connectedShelter
         self.eventModel = item
         self.descLabel.text = item.getDescription()
         followButton.isSelected = item.favorited
@@ -192,5 +224,19 @@ class EventDetailDescTableViewCell: UITableViewCell, Reusable {
         self.descLabel.text = item.getDescription()
         
         followButton.isSelected = item.following
+    }
+    
+    func viewPetsButtonPressed() {
+        guard let fromVC = fromVC else { return }
+        let vc = ViewPetsCollectionViewController(collectionViewLayout: UICollectionViewLayout())
+        vc.shelterId = self.shelterModel.key!
+        fromVC.navigationController?.pushViewController(vc)
+    }
+    
+    func viewEventsButtonPressed() {
+        guard let fromVC = fromVC else { return }
+        let vc = ViewEventsCollectionViewController(collectionViewLayout: UICollectionViewLayout())
+        vc.shelterId = self.shelterModel.key!
+        fromVC.navigationController?.pushViewController(vc)
     }
 }

@@ -11,15 +11,15 @@ import SnapKit
 
 class CustomNavigationController: UINavigationController {
     
-//    override func pushViewController(_ viewController: UIViewController, animated: Bool) {
-//        //@TODO: Fix this returning nil
-////        guard !viewControllers.isEmpty else { return }
-//        let pushingVC = viewControllers[viewControllers.count - 1]
-//        let backItem = UIBarButtonItem()
-//        backItem.title = ""
-//        pushingVC.navigationItem.backBarButtonItem = backItem
-//        super.pushViewController(viewController, animated: animated)
-//    }
+    override func pushViewController(_ viewController: UIViewController, animated: Bool) {
+        if !viewControllers.isEmpty {
+            let pushingVC = viewControllers[viewControllers.count - 1]
+            let backItem = UIBarButtonItem()
+            backItem.title = ""
+            pushingVC.navigationItem.backBarButtonItem = backItem
+        }
+        super.pushViewController(viewController, animated: animated)
+    }
 }
 
 extension UINavigationController {

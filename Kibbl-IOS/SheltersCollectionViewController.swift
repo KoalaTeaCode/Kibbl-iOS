@@ -52,8 +52,9 @@ class SheltersCollectionViewController: UICollectionViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        let parentVC = self.parent as! CustomTabViewController
-        parentVC.setChildCollectionView(to: self.collectionView!)
+        if let parentVC = self.parent as? CustomTabViewController {
+            parentVC.setChildCollectionView(to: self.collectionView!)
+        }
         
         registerNotifications()
         

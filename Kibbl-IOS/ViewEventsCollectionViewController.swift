@@ -1,23 +1,18 @@
 //
-//  EventsCollectionViewController.swift
+//  ViewEventsCollectionViewController.swift
 //  Kibbl-IOS
 //
-//  Created by Craig Holliday on 5/16/17.
+//  Created by Craig Holliday on 8/8/17.
 //  Copyright © 2017 Koala Tea. All rights reserved.
 //
 
 import UIKit
-import RealmSwift
-import KoalaTeaFlowLayout
 import Reusable
+import KoalaTeaFlowLayout
 
-class EventsCollectionViewController: UICollectionViewController {
+class ViewEventsCollectionViewController: UICollectionViewController {
     
-    var token: NotificationToken?
-    var data: Results<EventModel> = {
-        
-        return EventModel.getAllWithFilters().sorted(byKeyPath: "start_time")
-    }()
+    var data = [EventModel]()
     
     let pageSize = 20
     let preloadMargin = 5
@@ -25,13 +20,16 @@ class EventsCollectionViewController: UICollectionViewController {
     var lastLoadedPage = 0
     var itemCount = 0
     
+    var shelterId = ""
+    
+    var lastArray = [EventModel]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Uncomment the following line to preserve selection between presentations
         self.clearsSelectionOnViewWillAppear = false
         
-        // Register cell classes
         self.collectionView?.register(cellType: EventsCollectionViewCell.self)
         self.collectionView?.register(supplementaryViewType: FilterHeaderCollectionReusableView.self, ofKind: UICollectionElementKindSectionHeader)
         
@@ -39,12 +37,10 @@ class EventsCollectionViewController: UICollectionViewController {
         let layout = KoalaTeaFlowLayout(ratio: ratio, topBottomMargin: 0, leftRightMargin: 0, cellsAcross: 1, cellSpacing: 0)
         self.collectionView?.collectionViewLayout = layout
         
-        self.collectionView?.showsVerticalScrollIndicator = false
-
-        NotificationCenter.default.addObserver(self, selector: #selector(self.reloadForFilterChange), name: .filterChanged, object: nil)
-        
         self.view.backgroundColor = Stylesheet.Colors.white
         self.collectionView?.backgroundColor = Stylesheet.Colors.white
+        
+        self.title = "Shelter - Events"
     }
     
     override func didReceiveMemoryWarning() {
@@ -57,37 +53,48 @@ class EventsCollectionViewController: UICollectionViewController {
             parentVC.setChildCollectionView(to: self.collectionView!)
         }
         
-        registerNotifications()
-        
-        API.sharedInstance.getEvents()
-    }
-    
-    func reloadForFilterChange() {
-        data = EventModel.getAllWithFilters().sorted(byKeyPath: "start_time")
-        registerNotifications()
+        if shelterId != "" {
+            API.sharedInstance.getEvents(updatedAtBefore: "", shelterId: shelterId, completion: { (array) in
+                guard let array = array else { return }
+                self.data = array
+                self.collectionView?.reloadData()
+            })
+            return
+        }
     }
     
     // MARK: - Data stuff
     
     func getData(page: Int = 0, lastItemDate: String = "") {
         lastLoadedPage = page
-        API.sharedInstance.getEvents(createdAtBefore: lastItemDate)
+        API.sharedInstance.getEvents(updatedAtBefore: lastItemDate, shelterId: shelterId, completion: { (array) in
+            guard let array = array else { return }
+            //@TODO: This isn't the best
+            guard self.lastArray != array else { return }
+            self.lastArray = array
+            for item in array {
+                let existingItem = self.data.filter { $0.key == item.key }.first
+                if existingItem == nil {
+                    self.data.append(item)
+                }
+            }
+            self.collectionView?.reloadData()
+        })
     }
-
+    
     // MARK: UICollectionViewDataSource
     
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     
-    
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
         if !data.isEmpty {
-            if itemCount < 20 {
+            if self.data.count < 20 {
                 self.getData()
             }
-            return itemCount
+            return self.data.count
         }
         self.getData()
         return 0
@@ -103,16 +110,14 @@ class EventsCollectionViewController: UICollectionViewController {
         
         let nextPage: Int = Int(indexPath.item / pageSize) + 1
         let preloadIndex = nextPage * pageSize - preloadMargin
-        //@TODO: make this reflect pet collection view loading
-        if (indexPath.item >= preloadIndex && lastLoadedPage < nextPage) || indexPath == collectionView.indexPathForLastItem  {
-//            print("get next page : \(nextPage)")
-            if let lastDate = item.start_time {
+        
+        if (indexPath.item >= preloadIndex && lastLoadedPage < nextPage) || indexPath == collectionView.indexPathForLastItem {
+            if let lastDate = item.createdAt {
                 getData(page: nextPage, lastItemDate: lastDate)
             }
         }
         
         cell.setupCell(model: item)
-        
         return cell
     }
     
@@ -122,52 +127,29 @@ class EventsCollectionViewController: UICollectionViewController {
         
         let reusableview = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withClass: FilterHeaderCollectionReusableView.self, for: indexPath)
         reusableview.fromViewController = self
+        
         return reusableview
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        let height = Helpers.calculateHeight(forHeight: 69.25)
+        
+        var height = 69.25.calculateHeight()
+        
+        if shelterId != "" {
+            height = 0
+        }
+        
         return CGSize(width: self.collectionView!.width, height: height)
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let item = data[indexPath.row]
+        
         let vc = EventDetailTableViewController()
+        
         vc.event = item
+        
         self.navigationController?.pushViewController(vc)
     }
 }
 
-extension EventsCollectionViewController {
-    // MARK: Realm
-    func registerNotifications() {
-        token = data.addNotificationBlock {[weak self] (changes: RealmCollectionChange) in
-            guard let collectionView = self?.collectionView else { return }
-            
-            switch changes {
-            case .initial:
-                guard let int = self?.data.count else { return }
-                self?.itemCount = int
-                collectionView.reloadData()
-                break
-            case .update(_, let deletions, let insertions, let modifications):
-                guard let int = self?.data.count else { return }
-                self?.itemCount = int
-                
-                let deleteIndexPaths = deletions.map { IndexPath(item: $0, section: 0) }
-                let insertIndexPaths = insertions.map { IndexPath(item: $0, section: 0) }
-                let updateIndexPaths = modifications.map { IndexPath(item: $0, section: 0) }
-                
-                self?.collectionView?.performBatchUpdates({
-                    self?.collectionView?.deleteItems(at: deleteIndexPaths)
-                    self?.collectionView?.insertItems(at: insertIndexPaths)
-                    self?.collectionView?.reloadItems(at: updateIndexPaths)
-                }, completion: nil)
-                break
-            case .error(let error):
-                print(error)
-                break
-            }
-        }
-    }
-}

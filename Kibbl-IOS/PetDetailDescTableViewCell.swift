@@ -28,6 +28,10 @@ class PetDetailDescTableViewCell: UITableViewCell, Reusable {
     var followButton = UIButton()
     
     var model: PetModel!
+    var shelterModel: ShelterModel!
+    
+    var fromVC: UIViewController!
+    var viewShelterButton = UIButton()
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -134,6 +138,20 @@ class PetDetailDescTableViewCell: UITableViewCell, Reusable {
         }
         
         setupLabels()
+        
+        self.containerView.addSubview(viewShelterButton)
+        
+        viewShelterButton.snp.makeConstraints { (make) -> Void in
+            make.top.equalToSuperview().offset(12)
+            make.left.equalToSuperview()
+            make.width.equalTo(120.calculateWidth())
+            make.height.equalTo(36.calculateHeight())
+        }
+        
+        viewShelterButton.setTitle("View Shelter", for: .normal)
+        viewShelterButton.setBackgroundColor(color: Stylesheet.Colors.base, forState: .normal)
+        viewShelterButton.addTarget(self, action: #selector(self.viewSheltersButtonPressed), for: .touchUpInside)
+        viewShelterButton.cornerRadius = 8.calculateHeight()
     }
     
     func setupFollowButton() {
@@ -223,9 +241,8 @@ class PetDetailDescTableViewCell: UITableViewCell, Reusable {
         breedLabel.numberOfLines = 1
     }
     
-    
-    
     func setupCell(_ item: PetModel) {
+        self.shelterModel = item.connectedShelter
         self.model = item
         
         titleLabel.text = item.getName()
@@ -236,5 +253,13 @@ class PetDetailDescTableViewCell: UITableViewCell, Reusable {
         breedLabel.text = "Breed"
         
         followButton.isSelected = item.favorited
+    }
+    
+    func viewSheltersButtonPressed() {
+        guard let fromVC = fromVC else { return }
+        
+        let vc = ShelterDetailTableViewController()
+        vc.shelter = self.shelterModel
+        fromVC.navigationController?.pushViewController(vc)
     }
 }

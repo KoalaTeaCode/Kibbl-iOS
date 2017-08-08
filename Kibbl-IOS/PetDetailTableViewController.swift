@@ -67,6 +67,7 @@ class PetDetailTableViewController: UITableViewController {
             
             // Configure the cell...
             cell.setupCell(pet)
+            cell.fromVC = self
             
             return cell
 //        case 1:

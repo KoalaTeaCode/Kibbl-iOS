@@ -86,6 +86,9 @@
 		16F403FC1EF2EF6F00570E9A /* PushNotificationCollectionViewReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16F403FB1EF2EF6F00570E9A /* PushNotificationCollectionViewReusableView.swift */; };
 		16F72CF11EF0626300E7D649 /* FollowingShelterCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16F72CF01EF0626300E7D649 /* FollowingShelterCollectionViewController.swift */; };
 		16F9AAA81EDDDFF4004A47AD /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16F9AAA71EDDDFF4004A47AD /* Notification.swift */; };
+		16FA177E1F3A5BAD0071EDF7 /* ViewPetsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16FA177D1F3A5BAD0071EDF7 /* ViewPetsCollectionViewController.swift */; };
+		16FA17801F3A6D1A0071EDF7 /* ViewEventsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16FA177F1F3A6D1A0071EDF7 /* ViewEventsCollectionViewController.swift */; };
+		16FA17821F3A81890071EDF7 /* ArrayTransformExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16FA17811F3A81890071EDF7 /* ArrayTransformExtension.swift */; };
 		530835AB962CE35B0CDA9EEC /* Pods_Kibbl_IOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC723CAA47C694A722FE0D06 /* Pods_Kibbl_IOS.framework */; };
 		AD38D4F18D23E6C21A789D7C /* Pods_Kibbl_IOS_Kibbl_IOSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FC6C429E2ED1E3DFF1D89E4 /* Pods_Kibbl_IOS_Kibbl_IOSTests.framework */; };
 /* End PBXBuildFile section */
@@ -187,6 +190,9 @@
 		16F403FD1EF2FD0C00570E9A /* Kibbl-IOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Kibbl-IOS.entitlements"; sourceTree = "<group>"; };
 		16F72CF01EF0626300E7D649 /* FollowingShelterCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowingShelterCollectionViewController.swift; sourceTree = "<group>"; };
 		16F9AAA71EDDDFF4004A47AD /* Notification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
+		16FA177D1F3A5BAD0071EDF7 /* ViewPetsCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewPetsCollectionViewController.swift; sourceTree = "<group>"; };
+		16FA177F1F3A6D1A0071EDF7 /* ViewEventsCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewEventsCollectionViewController.swift; sourceTree = "<group>"; };
+		16FA17811F3A81890071EDF7 /* ArrayTransformExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayTransformExtension.swift; sourceTree = "<group>"; };
 		1FC6C429E2ED1E3DFF1D89E4 /* Pods_Kibbl_IOS_Kibbl_IOSTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Kibbl_IOS_Kibbl_IOSTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7316A7F73C4EE43246AC0860 /* Pods-Kibbl-IOS-Kibbl-IOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kibbl-IOS-Kibbl-IOSTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Kibbl-IOS-Kibbl-IOSTests/Pods-Kibbl-IOS-Kibbl-IOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		BC723CAA47C694A722FE0D06 /* Pods_Kibbl_IOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Kibbl_IOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -356,6 +362,7 @@
 				16F9AAA71EDDDFF4004A47AD /* Notification.swift */,
 				1636C0141EFB053D0073138D /* UnderlineLabel.swift */,
 				16245FA71F06FFB400181578 /* Tracker.swift */,
+				16FA17811F3A81890071EDF7 /* ArrayTransformExtension.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -372,6 +379,8 @@
 				16DDCA921EB16BA900148989 /* PetsCollectionViewController.swift */,
 				16DDCA941EB16BB200148989 /* SheltersCollectionViewController.swift */,
 				16241CD01ECAD3F7002D013B /* EventsCollectionViewController.swift */,
+				16FA177D1F3A5BAD0071EDF7 /* ViewPetsCollectionViewController.swift */,
+				16FA177F1F3A6D1A0071EDF7 /* ViewEventsCollectionViewController.swift */,
 			);
 			name = CollectionViews;
 			sourceTree = "<group>";
@@ -803,6 +812,7 @@
 				16DDCA8D1EB16B7A00148989 /* HomeCollectionViewController.swift in Sources */,
 				163A9E901ED7CF420038EA1D /* ImageOnlyCollectionViewCell.swift in Sources */,
 				16723FCF1EAAAB8C00B6931D /* ViewController.swift in Sources */,
+				16FA17801F3A6D1A0071EDF7 /* ViewEventsCollectionViewController.swift in Sources */,
 				16245FA81F06FFB400181578 /* Tracker.swift in Sources */,
 				1636C0131EFAF4840073138D /* FeedbackViewController.swift in Sources */,
 				161893E81EF72C12006AC1A7 /* UpdatesCollectionViewController.swift in Sources */,
@@ -834,11 +844,13 @@
 				167772D61EF18C9700565677 /* LeftViewController.swift in Sources */,
 				16B6C5501ECB717A00110FB5 /* PetModel.swift in Sources */,
 				160798061EFD81280019AF37 /* UpdatesCollectionViewCell.swift in Sources */,
+				16FA177E1F3A5BAD0071EDF7 /* ViewPetsCollectionViewController.swift in Sources */,
 				1624E0411EC65D29005DDEE0 /* EventModel.swift in Sources */,
 				1669E18C1EEF01F4008485DB /* PetFilterFormViewController.swift in Sources */,
 				167A408A1EDF760E00C40801 /* EventFilterFormViewController.swift in Sources */,
 				160184E51EB4F88D002FB15C /* PetCollectionViewCell.swift in Sources */,
 				16DDCA9C1EB16CB500148989 /* CustomNavigationController.swift in Sources */,
+				16FA17821F3A81890071EDF7 /* ArrayTransformExtension.swift in Sources */,
 				1699BD031EB273F800BBA890 /* CircularTitleview.swift in Sources */,
 				164192661EBD140500818618 /* UIImageExtension.swift in Sources */,
 				162F36C91EC2C40700B6F95E /* PetSkillsCollectionViewCell.swift in Sources */,

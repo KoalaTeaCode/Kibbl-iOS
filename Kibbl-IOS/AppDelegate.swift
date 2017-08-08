@@ -148,9 +148,10 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
 
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         let deviceTokenString = deviceToken.reduce("", {$0 + String(format: "%02X", $1)})
-        let token = Messaging.messaging().fcmToken
-        User.getActiveUser()?.update(deviceToken: token!)
-        API.sharedInstance.setPushNotifications(to: true, deviceToken: token!)
+        
+        guard let token = Messaging.messaging().fcmToken else { return }
+        User.getActiveUser()?.update(deviceToken: token)
+        API.sharedInstance.setPushNotifications(to: true, deviceToken: token)
         Messaging.messaging().apnsToken = deviceToken
         
         log.info("FCM token: \(token ?? "where are you")")

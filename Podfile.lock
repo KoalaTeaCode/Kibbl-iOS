@@ -142,7 +142,7 @@ SPEC CHECKSUMS:
   IQKeyboardManager: 593ee99b88381f4b9ccb22bd680f22606351bd41
   Kingfisher: dc3a4983e86d2dfa89513664983a82340c11a289
   KoalaTeaFlowLayout: 816ab599e3ddcf3234b8a02e2eeff4aed5ad71c0
-  nanopb: 22bc080fa3955e2116b6ff3ee6c2cb3c15ab97cb
+  nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   Nimble: 657d000e11df8aebe27cdaf9d244de7f30ed87f7
   ObjectMapper: 3d571bb5af471c779e1160828cd9ad5c4ef90958
   Pageboy: e81348c9f5193951f0be909fc332a3afe668d642
@@ -162,4 +162,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: e7ec10f36a9f67bcf18e7ce86a45762472fdcc8a
 
-COCOAPODS: 1.3.0.beta.3
+COCOAPODS: 1.3.0.rc.1

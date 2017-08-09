@@ -18,11 +18,14 @@ class ViewPetsCollectionViewController: UICollectionViewController {
     let preloadMargin = 5
     
     var lastLoadedPage = 0
-    var itemCount = 0
     
     var shelterId = ""
     
     var lastArray = [PetModel]()
+    
+    var emptyView: EmptyView!
+    var activityView = UIActivityIndicatorView()
+    var gettingData = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,6 +44,9 @@ class ViewPetsCollectionViewController: UICollectionViewController {
         self.collectionView?.backgroundColor = Stylesheet.Colors.white
         
         self.title = "Shelter - Pets"
+        
+        setupActivityIndicator()
+        setupEmptyView()
     }
     
     override func didReceiveMemoryWarning() {
@@ -52,26 +58,30 @@ class ViewPetsCollectionViewController: UICollectionViewController {
         if let parentVC = self.parent as? CustomTabViewController {
             parentVC.setChildCollectionView(to: self.collectionView!)
         }
-
-        if shelterId != "" {
-            API.sharedInstance.getPets(updatedAtBefore: "", shelterId: shelterId, completion: { (array) in
-                guard let array = array else { return }
-                self.data = array
-                self.collectionView?.reloadData()
-            })
-            return
-        }
     }
     
     // MARK: - Data stuff
     
     func getData(page: Int = 0, lastItemDate: String = "") {
+        guard !gettingData else { return }
+        self.gettingData = true
+        self.activityView.startAnimating()
+        self.activityView.isHidden = false
         lastLoadedPage = page
         API.sharedInstance.getPets(updatedAtBefore: lastItemDate, shelterId: shelterId, completion: { (array) in
             guard let array = array else { return }
             //@TODO: This isn't the best
-            guard self.lastArray != array else { return }
+            guard self.lastArray != array && self.lastArray.isEmpty else {
+                self.activityView.stopAnimating()
+                self.activityView.isHidden = true
+                // Show empty view
+                if self.data.count == 0 {
+                    self.emptyView.isHidden = false
+                }
+                return
+            }
             self.lastArray = array
+            
             for item in array {
                 let existingItem = self.data.filter { $0.key == item.key }.first
                 if existingItem == nil {
@@ -79,6 +89,9 @@ class ViewPetsCollectionViewController: UICollectionViewController {
                 }
             }
             self.collectionView?.reloadData()
+            self.activityView.stopAnimating()
+            self.activityView.isHidden = true
+            self.gettingData = false
         })
     }
     
@@ -94,6 +107,7 @@ class ViewPetsCollectionViewController: UICollectionViewController {
             if self.data.count < 20 {
                 self.getData()
             }
+            self.emptyView.isHidden = true
             return self.data.count
         }
         self.getData()
@@ -150,6 +164,18 @@ class ViewPetsCollectionViewController: UICollectionViewController {
         vc.pet = item
         
         self.navigationController?.pushViewController(vc)
+    }
+    
+    func setupEmptyView() {
+        self.emptyView = EmptyView(superView: self.view, title: "Sorry, No Pets Yet")
+        self.emptyView.isHidden = true
+        self.view.addSubview(emptyView)
+    }
+    
+    func setupActivityIndicator() {
+        activityView = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+        self.view.addSubview(activityView)
+        activityView.center = self.view.center
     }
 }
 

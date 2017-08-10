@@ -873,10 +873,12 @@ extension API {
             realm.delete(PetModel.all())
             realm.delete(ShelterModel.all())
             realm.delete(UpdatesModel.all())
+            realm.delete(FilterModel.all())
         }
         self.getEvents()
         self.getPets()
         self.getShelters()
+        FilterModel.createDefaultFilters()
     }
 }
 

@@ -47,6 +47,8 @@ public class PetModel: Object, Mappable {
     dynamic var zipcode: String? = nil
     dynamic var phoneNumber: String? = nil
     
+    dynamic var connectedShelter: ShelterModel! = nil
+    
     let newPetForShelter = LinkingObjects(fromType: UpdatesModel.self, property: "newPets")
     let updatedPetForShelter = LinkingObjects(fromType: UpdatesModel.self, property: "updatedPets")
     
@@ -91,6 +93,8 @@ public class PetModel: Object, Mappable {
         state <- map["contact.state"]
         zipcode <- map["contact.location"]
         phoneNumber <- map["contact.phone"]
+        
+        connectedShelter <- (map["shelterId"], SingleTransform<ShelterModel>())
     }
     
     // Mark: Getters

@@ -55,9 +55,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // Fallback on earlier versions
         }
         
-        API.sharedInstance.createDefaultData()
         API.sharedInstance.registerForPushNotifications(application)
         deleteOldRealmObjects()
+        API.sharedInstance.createDefaultData()
         
         // Setup Facebook
         SDKApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
@@ -268,6 +268,7 @@ extension AppDelegate {
             realm.delete(PetModel.all().filter("favorited = false"))
             realm.delete(ShelterModel.all().filter("following = false"))
             realm.delete(UpdatesModel.all())
+            realm.delete(FilterModel.all())
         }
     }
 }

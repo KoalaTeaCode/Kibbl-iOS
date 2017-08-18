@@ -1,30 +1,31 @@
 //
-//  SheltersCollectionViewController.swift
+//  ViewEventsCollectionViewController.swift
 //  Kibbl-IOS
 //
-//  Created by Craig Holliday on 4/26/17.
+//  Created by Craig Holliday on 8/8/17.
 //  Copyright © 2017 Koala Tea. All rights reserved.
 //
 
 import UIKit
-import RealmSwift
-import KoalaTeaFlowLayout
 import Reusable
+import KoalaTeaFlowLayout
 
-class SheltersCollectionViewController: UICollectionViewController {
+class ViewEventsCollectionViewController: UICollectionViewController {
     
-    let realm = try! Realm()
-    var token: NotificationToken?
-    var data: Results<ShelterModel> = {
-        
-        return ShelterModel.getAllWithFilters().sorted(byKeyPath: "createdAt", ascending: false)
-    }()
+    var data = [EventModel]()
     
     let pageSize = 20
     let preloadMargin = 5
     
     var lastLoadedPage = 0
-    var itemCount = 0
+    
+    var shelterId = ""
+    
+    var lastArray = [EventModel]()
+    
+    var emptyView: EmptyView!
+    var activityView = UIActivityIndicatorView()
+    var gettingData = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,21 +33,20 @@ class SheltersCollectionViewController: UICollectionViewController {
         // Uncomment the following line to preserve selection between presentations
         self.clearsSelectionOnViewWillAppear = false
         
-        // Register cell classes
-        self.collectionView?.register(cellType: ShelterCollectionViewCell.self)
+        self.collectionView?.register(cellType: EventsCollectionViewCell.self)
         self.collectionView?.register(supplementaryViewType: FilterHeaderCollectionReusableView.self, ofKind: UICollectionElementKindSectionHeader)
         
         let ratio = 99.calculateHeight() / UIScreen.main.bounds.width
         let layout = KoalaTeaFlowLayout(ratio: ratio, topBottomMargin: 0, leftRightMargin: 0, cellsAcross: 1, cellSpacing: 0)
         self.collectionView?.collectionViewLayout = layout
         
-        // Reload filter observer
-        NotificationCenter.default.addObserver(self, selector: #selector(self.reloadForFilterChange), name: .filterChanged, object: nil)
-        // Logging out observer
-        NotificationCenter.default.addObserver(self, selector: #selector(self.reloadForFilterChange), name: .loggedOut, object: nil)
-        
         self.view.backgroundColor = Stylesheet.Colors.white
         self.collectionView?.backgroundColor = Stylesheet.Colors.white
+        
+        self.title = "Shelter - Events"
+        
+        setupActivityIndicator()
+        setupEmptyView()
     }
     
     override func didReceiveMemoryWarning() {
@@ -58,22 +58,41 @@ class SheltersCollectionViewController: UICollectionViewController {
         if let parentVC = self.parent as? CustomTabViewController {
             parentVC.setChildCollectionView(to: self.collectionView!)
         }
-        
-        registerNotifications()
-        
-        API.sharedInstance.getShelters()
-    }
-    
-    func reloadForFilterChange() {
-        data = ShelterModel.getAllWithFilters().sorted(byKeyPath: "createdAt", ascending: false)
-        registerNotifications()
     }
     
     // MARK: - Data stuff
     
     func getData(page: Int = 0, lastItemDate: String = "") {
+        guard !gettingData else { return }
+        self.gettingData = true
+        self.activityView.startAnimating()
+        self.activityView.isHidden = false
         lastLoadedPage = page
-        API.sharedInstance.getShelters(createdAtBefore: lastItemDate)
+        API.sharedInstance.getEvents(updatedAtBefore: lastItemDate, shelterId: shelterId, completion: { (array) in
+            guard let array = array else { return }
+            //@TODO: This isn't the best
+            guard self.lastArray != array && self.lastArray.isEmpty else {
+                self.activityView.stopAnimating()
+                self.activityView.isHidden = true
+                // Show empty view
+                if self.data.count == 0 {
+                    self.emptyView.isHidden = false
+                }
+                return
+            }
+            self.lastArray = array
+            
+            for item in array {
+                let existingItem = self.data.filter { $0.key == item.key }.first
+                if existingItem == nil {
+                    self.data.append(item)
+                }
+            }
+            self.collectionView?.reloadData()
+            self.activityView.stopAnimating()
+            self.activityView.isHidden = true
+            self.gettingData = false
+        })
     }
     
     // MARK: UICollectionViewDataSource
@@ -82,14 +101,14 @@ class SheltersCollectionViewController: UICollectionViewController {
         return 1
     }
     
-    
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
         if !data.isEmpty {
-            if itemCount < 20 {
+            if self.data.count < 20 {
                 self.getData()
             }
-            return itemCount
+            self.emptyView.isHidden = true
+            return self.data.count
         }
         self.getData()
         return 0
@@ -99,22 +118,20 @@ class SheltersCollectionViewController: UICollectionViewController {
         
         let item = data[indexPath.row]
         
-        let cell = collectionView.dequeueReusableCell(for: indexPath) as ShelterCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(for: indexPath) as EventsCollectionViewCell
         
         // Configure the cell
         
         let nextPage: Int = Int(indexPath.item / pageSize) + 1
         let preloadIndex = nextPage * pageSize - preloadMargin
         
-        if (indexPath.item >= preloadIndex && lastLoadedPage < nextPage) || indexPath == collectionView.indexPathForLastItem  {
-            //            print("get next page : \(nextPage)")
+        if (indexPath.item >= preloadIndex && lastLoadedPage < nextPage) || indexPath == collectionView.indexPathForLastItem {
             if let lastDate = item.createdAt {
                 getData(page: nextPage, lastItemDate: lastDate)
             }
         }
         
-        cell.setupCell(shelter: item)
-        
+        cell.setupCell(model: item)
         return cell
     }
     
@@ -129,52 +146,36 @@ class SheltersCollectionViewController: UICollectionViewController {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        let height = Helpers.calculateHeight(forHeight: 69.25)
+        
+        var height = 69.25.calculateHeight()
+        
+        if shelterId != "" {
+            height = 0
+        }
+        
         return CGSize(width: self.collectionView!.width, height: height)
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let item = data[indexPath.row]
-        let vc = ShelterDetailTableViewController()
-        vc.shelter = item
+        
+        let vc = EventDetailTableViewController()
+        
+        vc.event = item
+        
         self.navigationController?.pushViewController(vc)
     }
-}
-
-extension SheltersCollectionViewController {
-    // MARK: Realm
-    func registerNotifications() {
-        token = data.addNotificationBlock {[weak self] (changes: RealmCollectionChange) in
-            guard let collectionView = self?.collectionView else { return }
-            switch changes {
-            case .initial:
-                guard let int = self?.data.count else { return }
-                self?.itemCount = int
-                collectionView.reloadData()
-                break
-            case .update(_, let deletions, let insertions, let modifications):
-                let deleteIndexPaths = deletions.map { IndexPath(item: $0, section: 0) }
-                let insertIndexPaths = insertions.map { IndexPath(item: $0, section: 0) }
-                let updateIndexPaths = modifications.map { IndexPath(item: $0, section: 0) }
-                
-                self?.collectionView?.performBatchUpdates({
-                    self?.collectionView?.deleteItems(at: deleteIndexPaths)
-                    if !deleteIndexPaths.isEmpty {
-                        self?.itemCount -= 1
-                    }
-                    self?.collectionView?.insertItems(at: insertIndexPaths)
-                    if !insertIndexPaths.isEmpty {
-                        self?.itemCount += 1
-                    }
-                    self?.collectionView?.reloadItems(at: updateIndexPaths)
-                }, completion: nil)
-                break
-            case .error(let error):
-                print(error)
-                break
-            }
-        }
+    
+    func setupEmptyView() {
+        self.emptyView = EmptyView(superView: self.view, title: "Sorry, No Events Yet")
+        self.emptyView.isHidden = true
+        self.view.addSubview(emptyView)
+    }
+    
+    func setupActivityIndicator() {
+        activityView = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+        self.view.addSubview(activityView)
+        activityView.center = self.view.center
     }
 }
-
 

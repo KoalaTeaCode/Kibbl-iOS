@@ -254,6 +254,34 @@ class API {
         }
     }
     
+    func getEvents(updatedAtBefore beforeDate: String = "", shelterId: String = "", completion: @escaping ([EventModel]?) -> Void) {
+        
+        let urlString = rootURL + Endpoints.eventsPoint
+        
+        var params = [String: String]()
+        params[Params.createdAtBefore] = beforeDate
+        params[Params.shelterId] = shelterId
+        
+        typealias model = EventModel
+        
+        Alamofire.request(urlString, method: .get, parameters: params).responseArray(keyPath: KeyPaths.data) { (response: DataResponse<[model]>) in
+            
+            switch response.result {
+            case .success:
+                
+                let modelsArray = response.result.value
+                
+                guard let array = modelsArray else { return }
+                completion(array)
+                
+            case .failure(let error):
+                log.error(error)
+                Tracker.logGeneralError(error: error)
+                completion(nil)
+            }
+        }
+    }
+    
     func getPets(updatedAtBefore beforeDate: String = "") {
         
         let urlString = rootURL + Endpoints.petsPoint
@@ -317,6 +345,34 @@ class API {
             case .failure(let error):
                 log.error(error)
                 Tracker.logGeneralError(error: error)
+            }
+        }
+    }
+    
+    func getPets(updatedAtBefore beforeDate: String = "", shelterId: String = "", completion: @escaping ([PetModel]?) -> Void) {
+        
+        let urlString = rootURL + Endpoints.petsPoint
+        
+        var params = [String: String]()
+        params[Params.lastUpdatedBefore] = beforeDate
+        params[Params.shelterId] = shelterId
+
+        typealias model = PetModel
+        
+        Alamofire.request(urlString, method: .get, parameters: params).responseArray(keyPath: KeyPaths.pets) { (response: DataResponse<[model]>) in
+            
+            switch response.result {
+            case .success:
+                
+                let modelsArray = response.result.value
+                
+                guard let array = modelsArray else { return }
+                completion(array)
+
+            case .failure(let error):
+                log.error(error)
+                Tracker.logGeneralError(error: error)
+                completion(nil)
             }
         }
     }
@@ -817,10 +873,12 @@ extension API {
             realm.delete(PetModel.all())
             realm.delete(ShelterModel.all())
             realm.delete(UpdatesModel.all())
+            realm.delete(FilterModel.all())
         }
         self.getEvents()
         self.getPets()
         self.getShelters()
+        FilterModel.createDefaultFilters()
     }
 }
 

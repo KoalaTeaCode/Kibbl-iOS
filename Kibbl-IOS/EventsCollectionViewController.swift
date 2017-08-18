@@ -41,7 +41,10 @@ class EventsCollectionViewController: UICollectionViewController {
         
         self.collectionView?.showsVerticalScrollIndicator = false
 
+        // Reload filter observer
         NotificationCenter.default.addObserver(self, selector: #selector(self.reloadForFilterChange), name: .filterChanged, object: nil)
+        // Logging out observer
+        NotificationCenter.default.addObserver(self, selector: #selector(self.reloadForFilterChange), name: .loggedOut, object: nil)
         
         self.view.backgroundColor = Stylesheet.Colors.white
         self.collectionView?.backgroundColor = Stylesheet.Colors.white
@@ -53,8 +56,9 @@ class EventsCollectionViewController: UICollectionViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        let parentVC = self.parent as! CustomTabViewController
-        parentVC.setChildCollectionView(to: self.collectionView!)
+        if let parentVC = self.parent as? CustomTabViewController {
+            parentVC.setChildCollectionView(to: self.collectionView!)
+        }
         
         registerNotifications()
         
@@ -142,7 +146,6 @@ extension EventsCollectionViewController {
     func registerNotifications() {
         token = data.addNotificationBlock {[weak self] (changes: RealmCollectionChange) in
             guard let collectionView = self?.collectionView else { return }
-            
             switch changes {
             case .initial:
                 guard let int = self?.data.count else { return }
@@ -150,16 +153,19 @@ extension EventsCollectionViewController {
                 collectionView.reloadData()
                 break
             case .update(_, let deletions, let insertions, let modifications):
-                guard let int = self?.data.count else { return }
-                self?.itemCount = int
-                
                 let deleteIndexPaths = deletions.map { IndexPath(item: $0, section: 0) }
                 let insertIndexPaths = insertions.map { IndexPath(item: $0, section: 0) }
                 let updateIndexPaths = modifications.map { IndexPath(item: $0, section: 0) }
                 
                 self?.collectionView?.performBatchUpdates({
                     self?.collectionView?.deleteItems(at: deleteIndexPaths)
+                    if !deleteIndexPaths.isEmpty {
+                        self?.itemCount -= 1
+                    }
                     self?.collectionView?.insertItems(at: insertIndexPaths)
+                    if !insertIndexPaths.isEmpty {
+                        self?.itemCount += 1
+                    }
                     self?.collectionView?.reloadItems(at: updateIndexPaths)
                 }, completion: nil)
                 break

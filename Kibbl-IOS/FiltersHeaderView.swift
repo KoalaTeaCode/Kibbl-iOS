@@ -188,7 +188,7 @@ class FilterHeaderCollectionReusableView: UICollectionReusableView, Reusable {
         super.init(frame: frame);
         
         self.performLayout()
-        //        Stylesheet.applyOn(self)
+//        Stylesheet.applyOn(self)
     }
     
     required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented"); }
@@ -211,7 +211,11 @@ class FilterHeaderCollectionReusableView: UICollectionReusableView, Reusable {
         filterButton.layer.borderWidth = 1
         filterButton.layer.borderColor  = UIColor.lightGray.cgColor
         filterButton.cornerRadius = 6
+        
+        // Reload filter observer
         NotificationCenter.default.addObserver(self, selector: #selector(self.checkIsSelected), name: .filterChanged, object: nil)
+        // Logging out observer
+        NotificationCenter.default.addObserver(self, selector: #selector(self.checkIsSelected), name: .loggedOut, object: nil)
         
         self.backgroundColor = .white
         

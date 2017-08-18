@@ -66,6 +66,7 @@ class ShelterDetailTableViewController: UITableViewController {
             
             // Configure the cell...
             cell.setupCell(shelter: shelter)
+            cell.fromVC = self
             
             return cell
         case 1:

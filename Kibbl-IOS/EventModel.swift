@@ -49,6 +49,7 @@ public class EventModel: Object, Mappable {
     let newEventForShelter = LinkingObjects(fromType: UpdatesModel.self, property: "newEvents")
     let updatedEventForShelter = LinkingObjects(fromType: UpdatesModel.self, property: "updatedEvents")
 
+    dynamic var connectedShelter: ShelterModel! = nil
     
     override public static func primaryKey() -> String? {
         return "key"
@@ -83,6 +84,8 @@ public class EventModel: Object, Mappable {
         
         favorited <- map["active"]
         imageURL1 <- map["facebook.cover"]
+        
+        connectedShelter <- (map["shelterId"], SingleTransform<ShelterModel>())
     }
     
     // Mark: Getters

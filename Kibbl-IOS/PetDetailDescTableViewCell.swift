@@ -253,10 +253,15 @@ class PetDetailDescTableViewCell: UITableViewCell, Reusable {
         breedLabel.text = "Breed"
         
         followButton.isSelected = item.favorited
+        
+        if shelterModel == nil {
+            self.viewShelterButton.isHidden = true
+        }
     }
     
     func viewSheltersButtonPressed() {
         guard let fromVC = fromVC else { return }
+        guard shelterModel != nil else { return }
         
         let vc = ShelterDetailTableViewController()
         vc.shelter = self.shelterModel

@@ -27,6 +27,7 @@ class EventDetailDescTableViewCell: UITableViewCell, Reusable {
     
     var viewPetsButton = UIButton()
     var viewEventsButton = UIButton()
+    var viewShelterButton = UIButton()
     
     var fromVC: UIViewController!
     
@@ -91,6 +92,21 @@ class EventDetailDescTableViewCell: UITableViewCell, Reusable {
         viewEventsButton.setBackgroundColor(color: Stylesheet.Colors.base, forState: .normal)
         viewEventsButton.addTarget(self, action: #selector(self.viewEventsButtonPressed), for: .touchUpInside)
         viewEventsButton.cornerRadius = 8.calculateHeight()
+        
+        self.containerView.addSubview(viewShelterButton)
+        
+        viewShelterButton.snp.makeConstraints { (make) -> Void in
+            make.top.equalToSuperview().offset(12)
+            make.left.equalToSuperview()
+            make.width.equalTo(120.calculateWidth())
+            make.height.equalTo(36.calculateHeight())
+        }
+        
+        viewShelterButton.setTitle("View Shelter", for: .normal)
+        viewShelterButton.setBackgroundColor(color: Stylesheet.Colors.base, forState: .normal)
+        viewShelterButton.addTarget(self, action: #selector(self.viewSheltersButtonPressed), for: .touchUpInside)
+        viewShelterButton.cornerRadius = 8.calculateHeight()
+        viewShelterButton.isHidden = true
         
         titleLabel.snp.makeConstraints { (make) -> Void in
             make.top.equalTo(followButton.snp.bottom).offset(12)
@@ -216,6 +232,10 @@ class EventDetailDescTableViewCell: UITableViewCell, Reusable {
         self.eventModel = item
         self.descLabel.text = item.getDescription()
         followButton.isSelected = item.favorited
+        
+        viewShelterButton.isHidden = false
+        viewEventsButton.isHidden = true
+        viewPetsButton.isHidden = true
     }
     
     func setupCell(shelter item: ShelterModel) {
@@ -237,6 +257,15 @@ class EventDetailDescTableViewCell: UITableViewCell, Reusable {
         guard let fromVC = fromVC else { return }
         let vc = ViewEventsCollectionViewController(collectionViewLayout: UICollectionViewLayout())
         vc.shelterId = self.shelterModel.key!
+        fromVC.navigationController?.pushViewController(vc)
+    }
+    
+    func viewSheltersButtonPressed() {
+        guard let fromVC = fromVC else { return }
+        guard shelterModel != nil else { return }
+        
+        let vc = ShelterDetailTableViewController()
+        vc.shelter = self.shelterModel
         fromVC.navigationController?.pushViewController(vc)
     }
 }

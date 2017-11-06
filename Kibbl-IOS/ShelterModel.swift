@@ -46,7 +46,13 @@ public class ShelterModel: Object, Mappable {
     
     // Mappable
     public func mapping(map: Map) {
-        key <- map["_id"]
+        if map.mappingType == .toJSON {
+            var key = self.key
+            key <- map["_id"]
+        }
+        else {
+            key <- map["_id"]
+        }
         rescueGroupId <- map["rescueGroupId"]
         country <- map["country"]
         name <- map["name"]
@@ -160,18 +166,41 @@ extension ShelterModel {
         let all = ShelterModel.all()
         
         var predicates = [NSPredicate]()
-        let filters = FilterModel.getActiveFilterModels()
-        for item in filters {
-            guard item.category == "Shelter" else { continue }
-            guard item.filterValue! != "" else { continue }
-            
-            let predicate = NSPredicate(format: "%K = %@", item.attributeName!, item.filterValue!)
-            
-            predicates.append(predicate)
+//        let filters = FilterModel.getActiveFilterModels()
+//        for item in filters {
+//            guard item.category == "Shelter" else { continue }
+//            guard item.filterValue! != "" else { continue }
+//            
+//            let predicate = NSPredicate(format: "%K = %@", item.attributeName!, item.filterValue!)
+//            
+//            predicates.append(predicate)
+//        }
+        
+//        if let filterModel = FilterModel.getActiveStateFilter() {
+//            let predicate = NSPredicate(format: "%K = %@", "state", filterModel.filterValue!)
+//
+//            predicates.append(predicate)
+//        }
+        
+        let defaults = UserDefaults.standard
+        
+//        if let city = defaults.string(forKey: UserDefaultKeys.city) {
+//            if city != "" {
+//                let predicate = NSPredicate(format: "%K = %@", "city", city)
+//                predicates.append(predicate)
+//            }
+//        }
+        
+        if let state = defaults.string(forKey: UserDefaultKeys.state) {
+            if state != "" {
+                if let abbreviation = States.getAbbreviationFrom(stateName: state) {
+                    let predicate = NSPredicate(format: "%K = %@", "state", abbreviation)
+                    predicates.append(predicate)
+                }
+            }
         }
-        
+
         let compoundPredicate = NSCompoundPredicate(type: .and, subpredicates: predicates)
-        
         return all.filter(compoundPredicate)
     }
     

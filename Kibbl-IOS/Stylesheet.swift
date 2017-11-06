@@ -217,6 +217,21 @@ extension Stylesheet {
         cell.heartImageButton.tintColor = context.heartTintColor
     }
     
+    static func applyOn(_ cell: ShelterTableViewCell) {
+        typealias context = CellContexts.EventsCell
+        cell.titleLabel.textColor = context.titleTextColor
+        cell.dateLabel.textColor = context.detailTextColor
+        cell.locationLabel.textColor = context.detailTextColor
+        
+        cell.titleLabel.font = UIFont(font: Fonts.Regular, size: 16.calculateWidth())
+        cell.dateLabel.font = UIFont(font: Fonts.Regular, size: 12.calculateWidth())
+        cell.locationLabel.font = UIFont(font: Fonts.Regular, size: 12.calculateWidth())
+        
+        //        cell.heartImageButton.tintColor = context.heartTintColor
+        cell.followButton.setTitleColor(context.followTintColor, for: .normal)
+        cell.followButton.setTitleColor(context.unfollowTintColor, for: .selected)
+    }
+    
     static func applyOn(_ cell: EventDetailDescTableViewCell) {
         typealias context = CellContexts.EventsCell
         

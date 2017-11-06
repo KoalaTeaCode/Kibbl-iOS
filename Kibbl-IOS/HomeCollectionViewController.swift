@@ -68,7 +68,13 @@ class HomeCollectionViewController: UICollectionViewController {
     override func viewWillAppear(_ animated: Bool) {
         loadData()
     }
-        
+    
+    override func viewDidAppear(_ animated: Bool) {
+        if let parentVC = self.parent as? CustomTabViewController {
+            parentVC.setChildCollectionView(to: self)
+        }
+    }
+    
     func loadData() {
         let when = DispatchTime.now() + 2 // change 2 to desired number of seconds
         DispatchQueue.main.asyncAfter(deadline: when) {

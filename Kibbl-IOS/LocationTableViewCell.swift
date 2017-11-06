@@ -116,7 +116,7 @@ class LocationTableViewCell: UITableViewCell, Reusable {
     func setupCell(pet item: PetModel) {
         //@TODO: Make part
         let boldState  = "State: "
-        let attrs = [NSFontAttributeName : UIFont.boldSystemFont(ofSize: 15)]
+        let attrs = [NSAttributedStringKey.font : UIFont.boldSystemFont(ofSize: 15)]
         let attributedString = NSMutableAttributedString(string:boldState, attributes:attrs)
         
         let normalText = (item.state ?? "")

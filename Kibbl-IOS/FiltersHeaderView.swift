@@ -230,11 +230,14 @@ class FilterHeaderCollectionReusableView: UICollectionReusableView, Reusable {
         
         switch fromViewController {
         case is EventsCollectionViewController:
-            vc = EventFilterFormViewController()
+            vc = GeneralFilterFormViewController(formType: .events)
+//            vc = EventFilterFormViewController()
         case is SheltersCollectionViewController:
-            vc = ShelterFilterFormViewController()
+            vc = GeneralFilterFormViewController(formType: .shelters)
+//            vc = ShelterFilterFormViewController()
         default: // PetCollectionView
-            vc = PetFilterFormViewController()
+            vc = GeneralFilterFormViewController(formType: .pets)
+//            vc = PetFilterFormViewController()
         }
         
         let navVC = UINavigationController(rootViewController: vc)

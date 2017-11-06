@@ -16,6 +16,9 @@ import Firebase
 import FacebookCore
 import Fabric
 import Crashlytics
+import GoogleMaps
+import GooglePlaces
+import ShowTime
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -23,17 +26,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        // Setup swifty beaver
+        let console = ConsoleDestination()
+        log.addDestination(console) // add to SwiftyBeaver
         
         // Setup realm configuration
         // Always turn this off before release
         migrateRealmDatabase()
         
         Fabric.with([Crashlytics.self])
-        
-        // Setup swifty beaver
-        let console = ConsoleDestination()
-        log.addDestination(console) // add to SwiftyBeaver
         
         UITabBar.appearance().tintColor = Stylesheet.Colors.base
         UITabBar.appearance().shadowImage = UIImage()
@@ -62,7 +63,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Setup Facebook
         SDKApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
         
-        UIBarButtonItem.appearance().setBackButtonTitlePositionAdjustment(UIOffsetMake(0, -60), for:UIBarMetrics.default)
+//        UIBarButtonItem.appearance().setBackButtonTitlePositionAdjustment(UIOffsetMake(0, -60), for:UIBarMetrics.default)
+        
+        let placesApiKey = "AIzaSyAaDBnQijBblxLVMvLG82oKVwZTUC4z0cA"
+        GMSPlacesClient.provideAPIKey(placesApiKey)
+        GMSServices.provideAPIKey(placesApiKey)
         
         window = UIWindow(frame: UIScreen.main.bounds)
         let rootVC = CustomTabViewController()
@@ -71,6 +76,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         vc.view.backgroundColor = .white
         window!.rootViewController = vc
         window!.makeKeyAndVisible()
+
+        // Show touches on screen
+//        ShowTime.enabled = .debugOnly
         
         return true
     }
@@ -129,6 +137,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         Realm.Configuration.defaultConfiguration = config
         _ = try! Realm()
+        log.info(config.fileURL!)
     }
 }
 

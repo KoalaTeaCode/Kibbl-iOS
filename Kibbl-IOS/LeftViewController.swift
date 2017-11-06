@@ -20,7 +20,7 @@ class LeftViewController: UIViewController {
 
         self.view.backgroundColor = Stylesheet.Colors.base
         
-        self.navigationBar?.setColors(background: Stylesheet.Colors.base, text: Stylesheet.Colors.white)
+        self.navigationController?.navigationBar.setColors(background: Stylesheet.Colors.base, text: Stylesheet.Colors.white)
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Dismiss", style: .done, target: self, action: #selector(self.barButtonPressed))
         
         setupTableView()
@@ -40,7 +40,7 @@ class LeftViewController: UIViewController {
         self.view.addSubview(containerView)
         containerView.backgroundColor = .red
         
-        guard let navBarHeight = self.navigationBar?.height else { return }
+        guard let navBarHeight = self.navigationController?.navigationBar.height else { return }
         
         containerView.snp.makeConstraints { (make) -> Void in
             make.width.equalToSuperview()

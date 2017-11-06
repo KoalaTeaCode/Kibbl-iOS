@@ -105,38 +105,6 @@
                  "_id" : "3.5"
                  },
                  {
-                 "name" : "City",
-                 "filterValue" : "City",
-                 "attributeName" : "city",
-                 "category" : "Shelter",
-                 "subCategory" : "Location",
-                 "_id" : "4.1"
-                 },
-                 {
-                 "name" : "State",
-                 "filterValue" : "State",
-                 "attributeName" : "state",
-                 "category" : "Shelter",
-                 "subCategory" : "Location",
-                 "_id" : "4.2"
-                 },
-                 {
-                 "name" : "City",
-                 "filterValue" : "City",
-                 "attributeName" : "locationCity",
-                 "category" : "Events",
-                 "subCategory" : "Location",
-                 "_id" : "4.3"
-                 },
-                 {
-                 "name" : "State",
-                 "filterValue" : "State",
-                 "attributeName" : "locationState",
-                 "category" : "Events",
-                 "subCategory" : "Location",
-                 "_id" : "4.4"
-                 },
-                 {
                  "name" : "Start",
                  "filterValue" : "Start",
                  "attributeName" : "startTimeDate",

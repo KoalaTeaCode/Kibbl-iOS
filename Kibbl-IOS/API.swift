@@ -8,7 +8,7 @@
 
 import UIKit
 import Alamofire
-import AlamofireObjectMapper
+//import AlamofireObjectMapper
 import RealmSwift
 import SwiftyJSON
 import UserNotifications
@@ -19,7 +19,9 @@ import PKHUD
 extension API {
     enum Headers {
         static let contentType = "Content-Type"
+        static let authorization = "Authorization"
         static let x_www_form_urlencoded = "application/x-www-form-urlencoded"
+        static let bearer = "Bearer "
     }
     
     enum Endpoints {
@@ -62,6 +64,7 @@ extension API {
         static let deviceToken = "deviceToken"
         static let accessToken = "accessToken"
         static let network = "network"
+        static let search = "search"
     }
 }
 
@@ -192,7 +195,7 @@ class API {
         }
     }
     
-    func getEvents(createdAtBefore beforeDate: String = "") {
+    func getEvents(createdAtBefore beforeDate: String = "", completion: ((_ success: Bool) -> Void)? = nil) {
         
         let urlString = rootURL + Endpoints.eventsPoint
         
@@ -222,18 +225,26 @@ class API {
                 
                 params[filter.attributeName!] = filter.filterValue
             }
+            
+//            if let filterModel = FilterModel.getActiveStateFilter() {
+//                let stateModel = StateModel.all().filter("abbreviation = %@", filterModel.filterValue!).first!
+//                params[Params.location] = stateModel.name
+//            }
+            
+            let defaults = UserDefaults.standard
+            if let location = defaults.string(forKey: UserDefaultKeys.location) {
+                params[Params.location] = location
+            }
         }
-
+        
         typealias model = EventModel
         
         Alamofire.request(urlString, method: .get, parameters: params).responseArray(keyPath: KeyPaths.data) { (response: DataResponse<[model]>) in
-            
             switch response.result {
             case .success:
                 let modelsArray = response.result.value
-                
                 guard let array = modelsArray else { return }
-                
+
                 for item in array {
 
                     // Check if Achievement Model already exists
@@ -247,9 +258,69 @@ class API {
                         // Nothing needs be done.
                     }
                 }
+                completion?(true)
             case .failure(let error):
                 log.error(error)
                 Tracker.logGeneralError(error: error)
+                completion?(false)
+            }
+        }
+    }
+    
+    // This is the new call for repos
+    func getEvents(before beforeDate: String = "", completion: @escaping ([Event]?) -> Void) {
+        
+        let urlString = rootURL + Endpoints.eventsPoint
+        
+        var params = [String: String]()
+        params[Params.createdAtBefore] = beforeDate
+        
+        if FilterModel.allActiveCount() != 0 {
+            params[Params.startDate] = Date().startOfDay.iso8601String
+            //            params[Params.endDate] = Date().endOfDay.iso8601String
+            
+            for filter in FilterModel.getActiveFilterModelsOf(category: "Events") {
+                
+                if filter.attributeName == "startTimeDate" {
+                    params[Params.startDate] = filter.filterValue
+                    continue
+                }
+                if filter.attributeName == "endTimeDate" {
+                    params[Params.endDate] = filter.filterValue
+                    continue
+                }
+                
+                if filter.attributeName == "locationState" {
+                    let stateModel = StateModel.all().filter("abbreviation = %@", filter.filterValue!).first!
+                    params[Params.location] = stateModel.name
+                    continue
+                }
+                
+                params[filter.attributeName!] = filter.filterValue
+            }
+            
+            let defaults = UserDefaults.standard
+            if let location = defaults.string(forKey: UserDefaultKeys.location) {
+                params[Params.location] = location
+            }
+        }
+        
+        typealias model = Event
+        
+        Alamofire.request(urlString, method: .get, parameters: params).responseArray(keyPath: KeyPaths.data) { (response: DataResponse<[model]>) in
+            
+            switch response.result {
+            case .success:
+                
+                let modelsArray = response.result.value
+                
+                guard let array = modelsArray else { return }
+                completion(array)
+                
+            case .failure(let error):
+                log.error(error)
+                Tracker.logGeneralError(error: error)
+                completion(nil)
             }
         }
     }
@@ -282,7 +353,7 @@ class API {
         }
     }
     
-    func getPets(updatedAtBefore beforeDate: String = "") {
+    func getPets(updatedAtBefore beforeDate: String = "", completion: ((_ success: Bool) -> Void)? = nil) {
         
         let urlString = rootURL + Endpoints.petsPoint
         
@@ -306,13 +377,18 @@ class API {
                     params[Params.gender] = filter.filterValue
                     continue
                 }
-                if filter.attributeName == "state" {
-                    let stateModel = StateModel.all().filter("abbreviation = %@", filter.filterValue!).first!
-                    params[Params.location] = stateModel.name
-                    continue
-                }
                 
                 params[filter.attributeName!] = filter.filterValue
+            }
+            
+//            if let filterModel = FilterModel.getActiveStateFilter() {
+//                let stateModel = StateModel.all().filter("abbreviation = %@", filterModel.filterValue!).first!
+//                params[Params.location] = stateModel.name
+//            }
+            
+            let defaults = UserDefaults.standard
+            if let location = defaults.string(forKey: UserDefaultKeys.location) {
+                params[Params.location] = location
             }
         }
 
@@ -342,14 +418,16 @@ class API {
                         // Nothing needs be done.
                     }
                 }
+                completion?(true)
             case .failure(let error):
                 log.error(error)
                 Tracker.logGeneralError(error: error)
+                completion?(false)
             }
         }
     }
     
-    func getPets(updatedAtBefore beforeDate: String = "", shelterId: String = "", completion: @escaping ([PetModel]?) -> Void) {
+    func getPetsWithId(updatedAtBefore beforeDate: String = "", shelterId: String = "", completion: @escaping ([PetModel]?) -> Void) {
         
         let urlString = rootURL + Endpoints.petsPoint
         
@@ -377,28 +455,48 @@ class API {
         }
     }
     
-    func getShelters(createdAtBefore beforeDate: String = "") {
+    func getShelters(createdAtBefore beforeDate: String = "", completion: ((_ success: Bool) -> Void)? = nil) {
         let urlString = rootURL + Endpoints.sheltersPoint
         
         var params = [String: String]()
         params[Params.createdAtBefore] = beforeDate
         
-        if FilterModel.activeCountOf(category: "Shelter") != 0 {
+        if FilterModel.allActiveCount() != 0 {
             for filter in FilterModel.getActiveFilterModelsOf(category: "Shelter") {
                 guard filter.filterValue != "" else { continue }
                 
-                if filter.attributeName == "state" {
-                    let stateModel = StateModel.all().filter("abbreviation = %@", filter.filterValue!).first!
-                    params[Params.location] = stateModel.name
-                    continue
-                }
+//                if filter.attributeName == "state" {
+//                    let stateModel = StateModel.all().filter("abbreviation = %@", filter.filterValue!).first!
+//                    params[Params.location] = stateModel.name
+//                    continue
+//                }
                 
                 params[filter.attributeName!] = filter.filterValue
+            }
+            
+//            if let filterModel = FilterModel.getActiveStateFilter() {
+//                let stateModel = StateModel.all().filter("abbreviation = %@", filterModel.filterValue!).first!
+//                params[Params.location] = stateModel.name
+//            }
+            
+            let defaults = UserDefaults.standard
+            if let location = defaults.string(forKey: UserDefaultKeys.location) {
+                params[Params.location] = location
             }
         }
 
         typealias model = ShelterModel
         
+//        let userToken: String
+//        userToken = User.getUserToken() ?? ""
+//        let _headers : HTTPHeaders = [
+//            Headers.authorization:Headers.bearer + userToken,
+//            ]
+//        log.info(_headers)
+//        Alamofire.request(urlString, method: .get, parameters: params, encoding: URLEncoding.httpBody, headers: _headers).responseJSON { (response) in
+//            log.debug(response.result.value)
+//        }
+//
         Alamofire.request(urlString, method: .get, parameters: params).responseArray(keyPath: KeyPaths.data) { (response: DataResponse<[model]>) in
             
             switch response.result {
@@ -420,9 +518,11 @@ class API {
                         // Nothing needs be done.
                     }
                 }
+                completion?(true)
             case .failure(let error):
                 log.error(error)
                 Tracker.logGeneralError(error: error)
+                completion?(false)
             }
         }
     }
@@ -788,6 +888,107 @@ class API {
     }
 }
 
+// Search
+extension API {
+    func getEventsWith(searchTerm: String, createdAtBefore beforeDate: String = "", completion: @escaping (_ posts: [EventModel]?) -> Void) {
+        let urlString = rootURL + Endpoints.eventsPoint
+        
+        var params = [String: String]()
+        params[Params.search] = searchTerm
+        params[Params.createdAtBefore] = beforeDate
+        
+        guard let user = User.getActiveUser() else { return }
+        guard let userToken = user.token else { return }
+        params[Params.token] = userToken
+        
+        typealias model = EventModel
+        
+        Alamofire.request(urlString, method: .get, parameters: params).responseArray(keyPath: KeyPaths.data) { (response: DataResponse<[model]>) in
+            switch response.result {
+            case .success:
+                let modelsArray = response.result.value
+                guard let array = modelsArray else {
+                    completion(nil)
+                    return
+                }
+                completion(array)
+            case .failure(let error):
+                log.error(error)
+                Tracker.logGeneralError(error: error)
+                completion(nil)
+            }
+        }
+    }
+    
+    func getPetsWith(searchTerm: String, createdAtBefore beforeDate: String = "", completion: @escaping (_ posts: [PetModel]?) -> Void) {
+        let urlString = rootURL + Endpoints.petsPoint
+        
+        var params = [String: String]()
+        params[Params.search] = searchTerm
+        params[Params.lastUpdatedBefore] = beforeDate
+        
+        guard let user = User.getActiveUser() else { return }
+        guard let userToken = user.token else { return }
+        params[Params.token] = userToken
+        
+        let _headers : HTTPHeaders = [
+            Headers.authorization:Headers.bearer + userToken,
+            ]
+        
+        typealias model = PetModel
+        Alamofire.request(urlString, method: .get, parameters: params, headers: _headers).responseArray(keyPath: KeyPaths.pets) { (response: DataResponse<[model]>) in
+            switch response.result {
+            case .success:
+                let modelsArray = response.result.value
+                guard let array = modelsArray else {
+                    completion(nil)
+                    return
+                }
+                completion(array)
+            case .failure(let error):
+                log.error(error)
+                Tracker.logGeneralError(error: error)
+                completion(nil)
+            }
+        }
+    }
+    
+    func getSheltersWith(searchTerm: String, createdAtBefore beforeDate: String = "", completion: @escaping (_ posts: [ShelterModel]?) -> Void) {
+        let urlString = rootURL + Endpoints.sheltersPoint
+        
+        var params = [String: String]()
+        params[Params.search] = searchTerm
+        params[Params.createdAtBefore] = beforeDate
+        
+        let userToken: String
+        userToken = User.getUserToken() ?? ""
+        
+        let _headers : HTTPHeaders = [
+            Headers.authorization:Headers.bearer + userToken,
+            ]
+        
+        typealias model = ShelterModel
+        Alamofire.request(urlString, method: .get, parameters: params, headers: _headers).responseJSON { response in
+            log.error(response.result.value)
+        }
+        Alamofire.request(urlString, method: .get, parameters: params, headers: _headers).responseArray(keyPath: KeyPaths.data) { (response: DataResponse<[model]>) in
+            switch response.result {
+            case .success:
+                guard let array = response.result.value else {
+                    completion(nil)
+                    return
+                }
+//                log.info(array.first)
+                completion(array)
+            case .failure(let error):
+                log.error(error)
+                Tracker.logGeneralError(error: error)
+                completion(nil)
+            }
+        }
+    }
+}
+
 extension API {
     // Facebook
     func facebookLogin(completion: @escaping (_ success: Bool?) -> Void) {
@@ -875,6 +1076,13 @@ extension API {
             realm.delete(UpdatesModel.all())
             realm.delete(FilterModel.all())
         }
+        
+        // Delete filter keys
+        let defaults = UserDefaults.standard
+        let domain = Bundle.main.bundleIdentifier!
+        defaults.removePersistentDomain(forName: domain)
+        defaults.synchronize()
+        
         self.getEvents()
         self.getPets()
         self.getShelters()

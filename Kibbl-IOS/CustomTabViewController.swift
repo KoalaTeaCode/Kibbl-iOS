@@ -132,8 +132,17 @@ class CustomTabViewController: UITabBarController, UITabBarControllerDelegate {
         collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .bottom, animated: true)
     }
     
-    func setChildCollectionView(to collectionView: UICollectionView) {
-        self.collectionView = collectionView
+    func setChildCollectionView(to collectionViewController: UICollectionViewController) {
+        self.collectionView = collectionViewController.collectionView
+        
+        switch collectionViewController {
+        case is PetsCollectionViewController, is EventsCollectionViewController, is SheltersCollectionViewController:
+            break
+        default:
+            let barButton = UIBarButtonItem(customView: bellButton)
+            navigationItem.rightBarButtonItem = barButton
+            break
+        }
     }
 }
 

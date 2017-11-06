@@ -29,9 +29,13 @@ class ShelterFilterFormViewController: FormViewController {
                 case "locationCity":
                     log.info("city")
                 default: // locationState
-                    activeState = item.filterValue
+                    break
                 }
             }
+        }
+        
+        if let state = FilterModel.getActiveStateFilter() {
+            activeState = state.filterValue
         }
         
         self.initializeForm()
@@ -52,9 +56,18 @@ class ShelterFilterFormViewController: FormViewController {
     func leftNavButtonPressed() {
         FilterModel.clearAllActiveOf(type: "Shelter")
         
-        let stateRow: PickerInlineRow<StateModel>! = self.form.rowBy(tag: tags.state)
-        stateRow.value = stateRow.options[0]
-        stateRow.updateCell()
+        let defaults = UserDefaults.standard
+        defaults.set("", forKey: UserDefaultKeys.city)
+        defaults.set("", forKey: UserDefaultKeys.state)
+        defaults.set("", forKey: UserDefaultKeys.location)
+        
+        NotificationCenter.default.post(name: .filterChanged, object: nil)
+        
+//        let stateRow: PickerInlineRow<StateModel>! = self.form.rowBy(tag: tags.state)
+//        stateRow.value = stateRow.options[0]
+//        stateRow.updateCell()
+        
+        self.dismiss(animated: true, completion: nil)
     }
     
     func rightNavButtonPressed() {
@@ -82,7 +95,7 @@ class ShelterFilterFormViewController: FormViewController {
                 }
                 .onChange { [] row in
                     // set active state model
-                    let filterObject = FilterModel.all().filter("category = %@", "Shelter").filter("name = %@", "State").first!
+                    guard let filterObject = FilterModel.getStateFilterModel() else { return }
                     filterObject.update(filterValue: row.value!.abbreviation!)
                     filterObject.update(active: true)
         }

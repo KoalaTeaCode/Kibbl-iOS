@@ -146,7 +146,6 @@ class Helpers {
 }
 
 extension Results{
-    
     func get <T:Object> (offset: Int, limit: Int ) -> Array<T>{
         //create variables
         var lim = 0 // how much to take
@@ -178,10 +177,9 @@ public extension String {
     /// Decodes string with html encoding.
     var htmlDecoded: String {
         guard let encodedData = self.data(using: .utf8) else { return self }
-        
-        let attributedOptions: [String : Any] = [
-            NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType,
-            NSCharacterEncodingDocumentAttribute: String.Encoding.utf8.rawValue]
+        let attributedOptions: [NSAttributedString.DocumentReadingOptionKey : Any] = [
+            NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.html,
+            NSAttributedString.DocumentReadingOptionKey.characterEncoding: String.Encoding.utf8.rawValue]
         
         do {
             let attributedString = try NSAttributedString(data: encodedData,

@@ -20,6 +20,8 @@ class SheltersCollectionViewController: UICollectionViewController {
         return ShelterModel.getAllWithFilters().sorted(byKeyPath: "createdAt", ascending: false)
     }()
     
+    let repo = SheltersRepository.shared
+    
     let pageSize = 20
     let preloadMargin = 5
     
@@ -56,13 +58,22 @@ class SheltersCollectionViewController: UICollectionViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         if let parentVC = self.parent as? CustomTabViewController {
-            parentVC.setChildCollectionView(to: self.collectionView!)
+            parentVC.setChildCollectionView(to: self)
+            
+            // Set navigation item to searh button
+            let rightBarButton = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(self.searchBarButtonPressed))
+            parentVC.navigationItem.rightBarButtonItem = rightBarButton
         }
         
-        registerNotifications()
-        
-        API.sharedInstance.getShelters()
+        self.registerNotifications()
     }
+    
+    func searchBarButtonPressed() {
+        let vc = SheltersSearchTableViewController()
+        let navVC = UINavigationController(rootViewController: vc)
+        self.navigationController?.present(navVC, animated: true, completion: nil)
+    }
+
     
     func reloadForFilterChange() {
         data = ShelterModel.getAllWithFilters().sorted(byKeyPath: "createdAt", ascending: false)
@@ -73,7 +84,29 @@ class SheltersCollectionViewController: UICollectionViewController {
     
     func getData(page: Int = 0, lastItemDate: String = "") {
         lastLoadedPage = page
-        API.sharedInstance.getShelters(createdAtBefore: lastItemDate)
+        //        API.sharedInstance.getEvents(createdAtBefore: lastItemDate)
+        
+        repo.getData(lastItemDate: lastItemDate, onSucces: { (returnedData) in
+            //            for item in returnedData {
+            //                let existingObject = self.data2.filter { $0.key! == item.key! }.first
+            //                guard existingObject == nil else { continue }
+            //                self.data2.append(item)
+            //            }
+            //            // Guard for new data
+            //            guard self.lastData != returnedData else {
+            //                //@TODO: Handle some error
+            //                log.error("here")
+            //                return
+            //            }
+            //            self.lastData = returnedData
+            //            DispatchQueue.main.async(execute: {
+            //                self.collectionView?.reloadData()
+            //            })
+            self.registerNotifications()
+        }) { (error) in
+            log.error(error)
+        }
+
     }
     
     // MARK: UICollectionViewDataSource
@@ -159,13 +192,9 @@ extension SheltersCollectionViewController {
                 
                 self?.collectionView?.performBatchUpdates({
                     self?.collectionView?.deleteItems(at: deleteIndexPaths)
-                    if !deleteIndexPaths.isEmpty {
-                        self?.itemCount -= 1
-                    }
+                    self?.itemCount -= deleteIndexPaths.count
                     self?.collectionView?.insertItems(at: insertIndexPaths)
-                    if !insertIndexPaths.isEmpty {
-                        self?.itemCount += 1
-                    }
+                    self?.itemCount += insertIndexPaths.count
                     self?.collectionView?.reloadItems(at: updateIndexPaths)
                 }, completion: nil)
                 break

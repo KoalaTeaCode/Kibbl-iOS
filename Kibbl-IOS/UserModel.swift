@@ -132,4 +132,10 @@ extension User {
             self.pushNotificationsSetting = pushNotificationsSetting
         }
     }
+    
+    static func getUserToken() -> String? {
+        guard let user = User.getActiveUser() else { return nil }
+        guard let userToken = user.token else { return nil }
+        return userToken
+    }
 }

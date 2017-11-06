@@ -32,6 +32,7 @@ class PetDetailDescTableViewCell: UITableViewCell, Reusable {
     
     var fromVC: UIViewController!
     var viewShelterButton = UIButton()
+    var subscribeToShelterButton = UIButton()
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -48,6 +49,8 @@ class PetDetailDescTableViewCell: UITableViewCell, Reusable {
         ]
         
         self.containerView.addSubview(followButton)
+        self.containerView.addSubview(viewShelterButton)
+        self.containerView.addSubview(subscribeToShelterButton)
         self.containerView.addSubviews(views)
         self.containerView.addSubview(contactButton)
         
@@ -73,12 +76,12 @@ class PetDetailDescTableViewCell: UITableViewCell, Reusable {
         followButton.snp.makeConstraints { (make) -> Void in
             make.top.equalToSuperview().offset(12)
             make.right.equalToSuperview()
-            make.width.equalTo(80.calculateWidth())
+            make.width.equalTo(90.calculateWidth())
             make.height.equalTo(36.calculateHeight())
         }
         
         titleLabel.snp.makeConstraints { (make) -> Void in
-            make.top.equalTo(followButton.snp.bottom).offset(12)
+            make.top.equalTo(subscribeToShelterButton.snp.bottom).offset(12)
             make.left.right.equalToSuperview()
             make.height.equalTo(36.calculateHeight())
         }
@@ -139,8 +142,6 @@ class PetDetailDescTableViewCell: UITableViewCell, Reusable {
         
         setupLabels()
         
-        self.containerView.addSubview(viewShelterButton)
-        
         viewShelterButton.snp.makeConstraints { (make) -> Void in
             make.top.equalToSuperview().offset(12)
             make.left.equalToSuperview()
@@ -150,13 +151,27 @@ class PetDetailDescTableViewCell: UITableViewCell, Reusable {
         
         viewShelterButton.setTitle("View Shelter", for: .normal)
         viewShelterButton.setBackgroundColor(color: Stylesheet.Colors.base, forState: .normal)
-        viewShelterButton.addTarget(self, action: #selector(self.viewSheltersButtonPressed), for: .touchUpInside)
+        viewShelterButton.addTarget(self, action: #selector(self.viewShelterButtonPressed), for: .touchUpInside)
         viewShelterButton.cornerRadius = 8.calculateHeight()
+        
+        subscribeToShelterButton.snp.makeConstraints { (make) -> Void in
+            make.top.equalTo(viewShelterButton.snp.bottom).offset(10.calculateHeight())
+            make.left.equalToSuperview()
+            make.width.equalTo(220.calculateWidth())
+            make.height.equalTo(36.calculateHeight())
+        }
+        
+        subscribeToShelterButton.setTitle("Subscribe to shelter", for: .normal)
+        subscribeToShelterButton.setTitle("Unsubscribe from shelter", for: .selected)
+        subscribeToShelterButton.setBackgroundColor(color: Stylesheet.Colors.base, forState: .normal)
+        subscribeToShelterButton.setBackgroundColor(color: Stylesheet.Colors.gray, forState: .selected)
+        subscribeToShelterButton.addTarget(self, action: #selector(self.subscribeToShelterButtonPressed), for: .touchUpInside)
+        subscribeToShelterButton.cornerRadius = 8.calculateHeight()
     }
     
     func setupFollowButton() {
-        followButton.setTitle("Follow", for: .normal)
-        followButton.setTitle("Unfollow", for: .selected)
+        followButton.setTitle("Favorite", for: .normal)
+        followButton.setTitle("Unfavorite", for: .selected)
         followButton.setBackgroundColor(color: Stylesheet.Colors.base, forState: .normal)
         followButton.setBackgroundColor(color: Stylesheet.Colors.gray, forState: .selected)
         
@@ -253,13 +268,31 @@ class PetDetailDescTableViewCell: UITableViewCell, Reusable {
         breedLabel.text = "Breed"
         
         followButton.isSelected = item.favorited
+
+        if shelterModel == nil {
+            self.viewShelterButton.isHidden = true
+            self.subscribeToShelterButton.isHidden = true
+        }
+
+        // Set subscribe button selected
+        if shelterModel != nil {
+            subscribeToShelterButton.isSelected = shelterModel.following
+        }
     }
     
-    func viewSheltersButtonPressed() {
+    func viewShelterButtonPressed() {
         guard let fromVC = fromVC else { return }
+        guard shelterModel != nil else { return }
         
         let vc = ShelterDetailTableViewController()
         vc.shelter = self.shelterModel
         fromVC.navigationController?.pushViewController(vc)
+    }
+    
+    func subscribeToShelterButtonPressed() {
+        guard shelterModel != nil else { return }
+
+        shelterModel.subscribeCall()
+        self.subscribeToShelterButton.isSelected = !self.subscribeToShelterButton.isSelected
     }
 }

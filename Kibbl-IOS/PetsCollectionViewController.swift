@@ -20,6 +20,8 @@ class PetsCollectionViewController: UICollectionViewController {
         return data
     }()
     
+    let repo = PetRepository.shared
+    
     let pageSize = 20
     let preloadMargin = 5
     
@@ -55,12 +57,20 @@ class PetsCollectionViewController: UICollectionViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         if let parentVC = self.parent as? CustomTabViewController {
-            parentVC.setChildCollectionView(to: self.collectionView!)
+            parentVC.setChildCollectionView(to: self)
+            
+            // Set navigation item to searh button
+            let rightBarButton = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(self.searchBarButtonPressed))
+            parentVC.navigationItem.rightBarButtonItem = rightBarButton
         }
         
-        registerNotifications()
-        
-        API.sharedInstance.getPets()
+        self.registerNotifications()
+    }
+    
+    func searchBarButtonPressed() {
+        let vc = PetsSearchTableViewController()
+        let navVC = UINavigationController(rootViewController: vc)
+        self.navigationController?.present(navVC, animated: true, completion: nil)
     }
     
     func reloadForFilterChange() {
@@ -72,9 +82,29 @@ class PetsCollectionViewController: UICollectionViewController {
     
     func getData(page: Int = 0, lastItemDate: String = "") {
         lastLoadedPage = page
-        API.sharedInstance.getPets(updatedAtBefore: lastItemDate)
+        //        API.sharedInstance.getEvents(createdAtBefore: lastItemDate)
+        
+        repo.getData(lastItemDate: lastItemDate, onSucces: { (returnedData) in
+            //            for item in returnedData {
+            //                let existingObject = self.data2.filter { $0.key! == item.key! }.first
+            //                guard existingObject == nil else { continue }
+            //                self.data2.append(item)
+            //            }
+            //            // Guard for new data
+            //            guard self.lastData != returnedData else {
+            //                //@TODO: Handle some error
+            //                log.error("here")
+            //                return
+            //            }
+            //            self.lastData = returnedData
+            //            DispatchQueue.main.async(execute: {
+            //                self.collectionView?.reloadData()
+            //            })
+            self.registerNotifications()
+        }) { (error) in
+            log.error(error)
+        }
     }
-    
     // MARK: UICollectionViewDataSource
     
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -158,16 +188,12 @@ extension PetsCollectionViewController {
                 let deleteIndexPaths = deletions.map { IndexPath(item: $0, section: 0) }
                 let insertIndexPaths = insertions.map { IndexPath(item: $0, section: 0) }
                 let updateIndexPaths = modifications.map { IndexPath(item: $0, section: 0) }
-                
+
                 self?.collectionView?.performBatchUpdates({
                     self?.collectionView?.deleteItems(at: deleteIndexPaths)
-                    if !deleteIndexPaths.isEmpty {
-                        self?.itemCount -= 1
-                    }
+                    self?.itemCount -= deleteIndexPaths.count
                     self?.collectionView?.insertItems(at: insertIndexPaths)
-                    if !insertIndexPaths.isEmpty {
-                        self?.itemCount += 1
-                    }
+                    self?.itemCount += insertIndexPaths.count
                     self?.collectionView?.reloadItems(at: updateIndexPaths)
                 }, completion: nil)
                 break

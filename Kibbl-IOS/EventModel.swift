@@ -225,12 +225,40 @@ extension EventModel {
                 
                 predicates.append(predicate)
             }
-            
-            
+        }
+        
+//        if let filterModel = FilterModel.getActiveStateFilter() {
+//            let predicate = NSPredicate(format: "%K = %@", "locationState", filterModel.filterValue!)
+//            
+//            predicates.append(predicate)
+//        }
+        
+        var locationPredicates = [NSPredicate]()
+        
+        let defaults = UserDefaults.standard
+        
+        if let city = defaults.string(forKey: UserDefaultKeys.city) {
+            if city != "" {
+                let predicate = NSPredicate(format: "%K = %@", "locationCity", city)
+                locationPredicates.append(predicate)
+            }
+        }
+        
+        if let state = defaults.string(forKey: UserDefaultKeys.state) {
+            if state != "" {
+                if let abbreviation = States.getAbbreviationFrom(stateName: state) {
+                    let predicate = NSPredicate(format: "%K = %@", "locationState", abbreviation)
+                    locationPredicates.append(predicate)
+                }
+            }
+        }
+        
+        let locationPredicate = NSCompoundPredicate(type: .or, subpredicates: locationPredicates)
+        if !locationPredicates.isEmpty {
+            predicates.append(locationPredicate)
         }
         
         let compoundPredicate = NSCompoundPredicate(type: .and, subpredicates: predicates)
-
         return all.filter(compoundPredicate)
     }
     

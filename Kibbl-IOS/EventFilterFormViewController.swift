@@ -10,12 +10,34 @@ import UIKit
 import RealmSwift
 import Eureka
 import SwifterSwift
+import GooglePlaces
+
+enum UserDefaultKeys {
+    static let filters = "filters"
+    static let location = "location"
+    static let city = "city"
+    static let state = "state"
+}
+
+enum GooglePlacesKeys {
+    static let state = "administrative_area_level_1"
+    static let city = "locality"
+}
+
+enum FilterKeys {
+    static let state = "state"
+    static let city = "city"
+    
+    static let tag = "tag"
+    static let lastItemDate = "lastItemDate"
+}
 
 enum tags {
     static let between = "Between"
     static let and = "And"
     static let state = "State"
     static let city = "City"
+    static let location = "Location"
 }
 
 class EventFilterFormViewController: FormViewController {
@@ -54,9 +76,13 @@ class EventFilterFormViewController: FormViewController {
                 case "locationCity":
                     log.info("city")
                 default: // locationState
-                    activeState = item.filterValue
+                    break
                 }
             }
+        }
+        
+        if let state = FilterModel.getActiveStateFilter() {
+            activeState = state.filterValue
         }
         
         self.initializeForm()
@@ -77,15 +103,24 @@ class EventFilterFormViewController: FormViewController {
     func leftNavButtonPressed() {
         FilterModel.clearAllActiveOf(type: "Events")
         
-        let startRow: DateInlineRow! = self.form.rowBy(tag: tags.between)
-        startRow.value = Date()?.startOfDay
-        startRow.updateCell()
-        let endRow: DateInlineRow! = self.form.rowBy(tag: tags.and)
-        endRow.value = Date()?.endOfDay
-        endRow.updateCell()
-        let stateRow: PickerInlineRow<StateModel>! = self.form.rowBy(tag: tags.state)
-        stateRow.value = stateRow.options[0]
-        stateRow.updateCell()
+        let defaults = UserDefaults.standard
+        defaults.set("", forKey: UserDefaultKeys.city)
+        defaults.set("", forKey: UserDefaultKeys.state)
+        defaults.set("", forKey: UserDefaultKeys.location)
+        
+        NotificationCenter.default.post(name: .filterChanged, object: nil)
+        
+//        let startRow: DateInlineRow! = self.form.rowBy(tag: tags.between)
+//        startRow.value = Date()?.startOfDay
+//        startRow.updateCell()
+//        let endRow: DateInlineRow! = self.form.rowBy(tag: tags.and)
+//        endRow.value = Date()?.endOfDay
+//        endRow.updateCell()
+//        let stateRow: PickerInlineRow<StateModel>! = self.form.rowBy(tag: tags.state)
+//        stateRow.value = stateRow.options[0]
+//        stateRow.updateCell()
+        
+        self.dismiss(animated: true, completion: nil)
     }
     
     func rightNavButtonPressed() {
@@ -133,50 +168,72 @@ class EventFilterFormViewController: FormViewController {
                     startObject.update(active: true)
                 }
         +++ Section("Location")
-            <<< PickerInlineRow<StateModel>(tags.state) { (row : PickerInlineRow<StateModel>) -> Void in
-                row.title = row.tag
-                row.displayValueFor = { (rowValue: StateModel?) in
-                    return rowValue.map { $0.name! + " - " + $0.abbreviation! }
-                }
-                row.options = states
-                row.value = row.options[0]
-                
-                if activeState != nil {
-                    let activeModel = StateModel.all().filter("abbreviation = %@", activeState!).first!
-                    let index = states.index(of: activeModel)
-                    row.value = row.options[index!]
-                }
-                
-                }
-                .onChange { [] row in
-                    // set active state model
-                    let filterObject = FilterModel.all().filter("category = %@", "Events").filter("name = %@", "State").first!
-                    filterObject.update(filterValue: row.value!.abbreviation!)
-                    filterObject.update(active: true)
-                    
-                    // filter cities
-//                    self.cities = self.allCities.filter{ $0.abbreviation == row.value?.abbreviation }
-                    
-                    // update cell
-//                    let rowToUpdate: PickerInlineRow<CityModel>! = self.form.rowBy(tag: tags.city)
-//                    rowToUpdate.options = self.cities
-//                    //@TODO: Add some sort of loading view
-//                    guard !self.cities.isEmpty else { return }
-//                    rowToUpdate.value = rowToUpdate.options[0]
-//                    rowToUpdate.updateCell()
-                }
-//            <<< PickerInlineRow<CityModel>(tags.city) { (row : PickerInlineRow<CityModel>) -> Void in
-//                row.title = row.tag
-//                row.displayValueFor = { (rowValue: CityModel?) in
-//                    return rowValue.map { $0.name! }
+            <<< LabelRow(tags.location) {
+                $0.title = $0.tag
+                $0.value = ""
+//                if activeLocation {
+//                  $0.value = activeLocation
 //                }
-//                row.options = cities
-//                row.value = row.options[0]
-        
-                //@TODO: Add city filter in
-//                let filterObject = FilterModel.all().filter("category = %@", "Events").filter("name = %@", "City").first!
-//                filterObject.update(filterValue: row.value!.name!)
-//                filterObject.update(active: true)
-//                }
+            }.onCellSelection({ (cell, row) in
+                let autocompleteController = GMSAutocompleteViewController()
+                autocompleteController.delegate = self
+                self.present(autocompleteController, animated: true, completion: nil)
+            })
     }
+}
+
+// Handle the user's selection.
+extension EventFilterFormViewController: GMSAutocompleteViewControllerDelegate {
+    
+    // Handle the user's selection.
+    func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
+//        print("Place name: \(place.name)")
+//        print("Place address: \(place.formattedAddress)")
+//        print("Place attributions: \(place.attributions)")
+        
+        
+        // @TODO: Change to filters dictionary
+        // Setting filters
+        let defaults = UserDefaults.standard
+        defaults.set(place.formattedAddress!,forKey: UserDefaultKeys.location)
+        
+        if let placeComponents = place.addressComponents {
+            let tmpState = placeComponents.filter { $0.type == GooglePlacesKeys.state }.first
+            if let state = tmpState {
+                defaults.set(state.name,forKey: UserDefaultKeys.state)
+            }
+            
+            let tmpCity = placeComponents.filter { $0.type == GooglePlacesKeys.city }.first
+            if let city = tmpCity {
+                defaults.set(city.name,forKey: UserDefaultKeys.city)
+            }
+        }
+        
+        let row = self.form.allSections.last!.first! as! LabelRow
+        row.value = place.formattedAddress
+        
+        NotificationCenter.default.post(name: .filterChanged, object: nil)
+        
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func viewController(_ viewController: GMSAutocompleteViewController, didFailAutocompleteWithError error: Error) {
+        // TODO: handle the error.
+        print("Error: ", error.localizedDescription)
+    }
+    
+    // User canceled the operation.
+    func wasCancelled(_ viewController: GMSAutocompleteViewController) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    // Turn the network activity indicator on and off again.
+    func didRequestAutocompletePredictions(_ viewController: GMSAutocompleteViewController) {
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+    }
+    
+    func didUpdateAutocompletePredictions(_ viewController: GMSAutocompleteViewController) {
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
+    }
+    
 }

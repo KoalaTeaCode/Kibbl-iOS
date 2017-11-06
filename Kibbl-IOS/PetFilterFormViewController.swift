@@ -30,12 +30,15 @@ class PetFilterFormViewController: FormViewController {
         
         if FilterModel.activeCountOf(category: "Pets") != 0 {
             let filters = FilterModel.getActiveFilterModelsOf(category: "Pets")
-            for item in filters {
-                
-                if item.attributeName == "state" {
-                    activeState = item.filterValue
-                }
+            for item in filters {                
+//                if item.attributeName == "state" {
+//                    activeState = item.filterValue
+//                }
             }
+        }
+        
+        if let state = FilterModel.getActiveStateFilter() {
+            activeState = state.filterValue
         }
 
         self.initializeForm()
@@ -145,7 +148,7 @@ class PetFilterFormViewController: FormViewController {
                 }
                 .onChange { [] row in
                     // set active state model
-                    let filterObject = FilterModel.all().filter("category = %@", "Pets").filter("name = %@", "State").first!
+                    guard let filterObject = FilterModel.getStateFilterModel() else { return }
                     filterObject.update(filterValue: row.value!.abbreviation!)
                     filterObject.update(active: true)
                     

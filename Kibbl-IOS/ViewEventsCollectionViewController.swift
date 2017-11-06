@@ -56,7 +56,7 @@ class ViewEventsCollectionViewController: UICollectionViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         if let parentVC = self.parent as? CustomTabViewController {
-            parentVC.setChildCollectionView(to: self.collectionView!)
+            parentVC.setChildCollectionView(to: self)
         }
     }
     
@@ -68,31 +68,31 @@ class ViewEventsCollectionViewController: UICollectionViewController {
         self.activityView.startAnimating()
         self.activityView.isHidden = false
         lastLoadedPage = page
-        API.sharedInstance.getEvents(updatedAtBefore: lastItemDate, shelterId: shelterId, completion: { (array) in
-            guard let array = array else { return }
-            //@TODO: This isn't the best
-            guard self.lastArray != array && self.lastArray.isEmpty else {
-                self.activityView.stopAnimating()
-                self.activityView.isHidden = true
-                // Show empty view
-                if self.data.count == 0 {
-                    self.emptyView.isHidden = false
-                }
-                return
-            }
-            self.lastArray = array
-            
-            for item in array {
-                let existingItem = self.data.filter { $0.key == item.key }.first
-                if existingItem == nil {
-                    self.data.append(item)
-                }
-            }
-            self.collectionView?.reloadData()
-            self.activityView.stopAnimating()
-            self.activityView.isHidden = true
-            self.gettingData = false
-        })
+//        API.sharedInstance.getEvents(updatedAtBefore: lastItemDate, shelterId: shelterId, completion: { (array) in
+//            guard let array = array else { return }
+//            //@TODO: This isn't the best
+//            guard self.lastArray != array && self.lastArray.isEmpty else {
+//                self.activityView.stopAnimating()
+//                self.activityView.isHidden = true
+//                // Show empty view
+//                if self.data.count == 0 {
+//                    self.emptyView.isHidden = false
+//                }
+//                return
+//            }
+//            self.lastArray = array
+//            
+//            for item in array {
+//                let existingItem = self.data.filter { $0.key == item.key }.first
+//                if existingItem == nil {
+//                    self.data.append(item)
+//                }
+//            }
+//            self.collectionView?.reloadData()
+//            self.activityView.stopAnimating()
+//            self.activityView.isHidden = true
+//            self.gettingData = false
+//        })
     }
     
     // MARK: UICollectionViewDataSource

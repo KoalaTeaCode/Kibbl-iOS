@@ -5,13 +5,13 @@
 //  Created by Craig Holliday on 8/8/17.
 //  Copyright © 2017 Koala Tea. All rights reserved.
 //
-
+//@TODO: Got to put this back
 import UIKit
 import Reusable
 import KoalaTeaFlowLayout
 
 class ViewPetsCollectionViewController: UICollectionViewController {
-    
+
     var data = [PetModel]()
     
     let pageSize = 20
@@ -56,7 +56,7 @@ class ViewPetsCollectionViewController: UICollectionViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         if let parentVC = self.parent as? CustomTabViewController {
-            parentVC.setChildCollectionView(to: self.collectionView!)
+            parentVC.setChildCollectionView(to: self)
         }
     }
     
@@ -68,7 +68,7 @@ class ViewPetsCollectionViewController: UICollectionViewController {
         self.activityView.startAnimating()
         self.activityView.isHidden = false
         lastLoadedPage = page
-        API.sharedInstance.getPets(updatedAtBefore: lastItemDate, shelterId: shelterId, completion: { (array) in
+        API.sharedInstance.getPetsWithId(updatedAtBefore: lastItemDate, shelterId: shelterId, completion: { (array) in
             guard let array = array else { return }
             //@TODO: This isn't the best
             guard self.lastArray != array && self.lastArray.isEmpty else {

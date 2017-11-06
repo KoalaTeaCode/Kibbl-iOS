@@ -236,6 +236,16 @@ extension PetModel {
             all = all.filter(genderCompound)
         }
         
+        let defaults = UserDefaults.standard
+        if let state = defaults.string(forKey: UserDefaultKeys.state) {
+            if state != "" {
+                if let abbreviation = States.getAbbreviationFrom(stateName: state) {
+                    let predicate = NSPredicate(format: "%K = %@", "state", abbreviation)
+                    all = all.filter(predicate)
+                }
+            }
+        }
+        
         return all
     }
     

@@ -90,20 +90,19 @@ class ContainerViewController: UIViewController {
         self.setupSegmentControl()
     }
     
-    func segmentedValueChanged(_ sender: BetterSegmentedControl!)
+    @objc func segmentedValueChanged(_ sender: BetterSegmentedControl!)
     {
         self.updateView()
     }
     
     func setupSegmentControl() {
-        layoutSegmentControl = BetterSegmentedControl(
-            frame: CGRect(x: 0, y: 0, width: 0, height: 0),
-            titles: ["Pets", "Events"],
-            index: 0,
-            backgroundColor: .clear,
-            titleColor: .clear,
-            indicatorViewBackgroundColor: .clear,
-            selectedTitleColor: .clear)
+        layoutSegmentControl = BetterSegmentedControl(frame: CGRect(x: 0, y: 0, width: 0, height: 0),
+                                                      titles: ["Pets", "Events"],
+                                                      index: 0,
+                                                      options: [.backgroundColor(.clear),
+                                                                .titleColor(.clear),
+                                                                .indicatorViewBackgroundColor(.clear),
+                                                                .selectedTitleColor(.clear)])
         layoutSegmentControl.addTarget(self, action: #selector(self.segmentedValueChanged(_:)), for: .valueChanged)
         
         self.topBarView.addSubview(layoutSegmentControl)

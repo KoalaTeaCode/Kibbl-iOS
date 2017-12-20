@@ -1,196 +1,239 @@
 PODS:
-  - Alamofire (4.5.1)
-  - BetterSegmentedControl (0.8)
+  - Alamofire (4.6.0)
+  - BetterSegmentedControl (0.9)
   - Bolts (1.8.4):
     - Bolts/AppLinks (= 1.8.4)
     - Bolts/Tasks (= 1.8.4)
   - Bolts/AppLinks (1.8.4):
     - Bolts/Tasks
   - Bolts/Tasks (1.8.4)
-  - Crashlytics (3.8.6):
-    - Fabric (~> 1.6.3)
-  - Eureka (3.1.0)
-  - Fabric (1.6.13)
-  - FacebookCore (0.2.0):
+  - Crashlytics (3.9.3):
+    - Fabric (~> 1.7.2)
+  - Eureka (4.0.1)
+  - Fabric (1.7.2)
+  - FacebookCore (0.3.0):
     - Bolts (~> 1.8)
-    - FBSDKCoreKit (~> 4.15)
-  - FacebookLogin (0.2.0):
+    - FBSDKCoreKit (~> 4.27)
+  - FacebookLogin (0.3.0):
     - Bolts (~> 1.8)
-    - FacebookCore (~> 0.2)
-    - FBSDKCoreKit (~> 4.15)
-    - FBSDKLoginKit (~> 4.15)
-  - FBSDKCoreKit (4.26.0):
+    - FacebookCore (~> 0.3)
+    - FBSDKCoreKit (~> 4.27)
+    - FBSDKLoginKit (~> 4.27)
+  - FBSDKCoreKit (4.29.0):
     - Bolts (~> 1.7)
-  - FBSDKLoginKit (4.26.0):
+  - FBSDKLoginKit (4.29.0):
     - FBSDKCoreKit
-  - Firebase/Core (4.2.0):
-    - FirebaseAnalytics (= 4.0.3)
-    - FirebaseCore (= 4.0.7)
-  - Firebase/Messaging (4.2.0):
-    - Firebase/Core
-    - FirebaseMessaging (= 2.0.3)
-  - FirebaseAnalytics (4.0.3):
+  - Firebase (4.8.0):
+    - Firebase/Core (= 4.8.0)
+  - Firebase/Core (4.8.0):
+    - FirebaseAnalytics (= 4.0.5)
+    - FirebaseCore (= 4.0.13)
+  - FirebaseAnalytics (4.0.5):
     - FirebaseCore (~> 4.0)
     - FirebaseInstanceID (~> 2.0)
     - GoogleToolboxForMac/NSData+zlib (~> 2.1)
     - nanopb (~> 0.3)
-  - FirebaseCore (4.0.7):
+  - FirebaseCore (4.0.13):
     - GoogleToolboxForMac/NSData+zlib (~> 2.1)
-    - nanopb (~> 0.3)
-  - FirebaseInstanceID (2.0.3)
-  - FirebaseMessaging (2.0.3):
+  - FirebaseInstanceID (2.0.8):
+    - FirebaseCore (~> 4.0)
+  - FirebaseMessaging (2.0.8):
     - FirebaseAnalytics (~> 4.0)
     - FirebaseCore (~> 4.0)
     - FirebaseInstanceID (~> 2.0)
     - GoogleToolboxForMac/Logger (~> 2.1)
     - Protobuf (~> 3.1)
-  - FittableFontLabel (1.4.0)
-  - GoogleMaps (2.4.0):
-    - GoogleMaps/Maps (= 2.4.0)
-  - GoogleMaps/Base (2.4.0)
-  - GoogleMaps/Maps (2.4.0):
+  - FittableFontLabel (2.0.0)
+  - GoogleMaps (2.5.0):
+    - GoogleMaps/Maps (= 2.5.0)
+  - GoogleMaps/Base (2.5.0)
+  - GoogleMaps/Maps (2.5.0):
     - GoogleMaps/Base
-  - GooglePlacePicker (2.4.0):
-    - GoogleMaps (= 2.4.0)
-    - GooglePlaces (= 2.4.0)
-  - GooglePlaces (2.4.0):
-    - GoogleMaps/Base (= 2.4.0)
-  - GoogleToolboxForMac/Defines (2.1.1)
-  - GoogleToolboxForMac/Logger (2.1.1):
-    - GoogleToolboxForMac/Defines (= 2.1.1)
-  - GoogleToolboxForMac/NSData+zlib (2.1.1):
-    - GoogleToolboxForMac/Defines (= 2.1.1)
-  - IQKeyboardManager (4.0.13)
-  - Kingfisher (4.0.1)
-  - KoalaTeaFlowLayout (0.3.0)
+  - GooglePlacePicker (2.5.0):
+    - GoogleMaps (= 2.5.0)
+    - GooglePlaces (= 2.5.0)
+  - GooglePlaces (2.5.0):
+    - GoogleMaps/Base (= 2.5.0)
+  - GoogleToolboxForMac (2.1.3):
+    - GoogleToolboxForMac/Core (= 2.1.3)
+    - GoogleToolboxForMac/Defines (= 2.1.3)
+    - GoogleToolboxForMac/GeometryUtils (= 2.1.3)
+    - GoogleToolboxForMac/KVO (= 2.1.3)
+    - GoogleToolboxForMac/Logger (= 2.1.3)
+    - GoogleToolboxForMac/NSData+zlib (= 2.1.3)
+    - GoogleToolboxForMac/NSDictionary+URLArguments (= 2.1.3)
+    - GoogleToolboxForMac/NSFileHandle+UniqueName (= 2.1.3)
+    - GoogleToolboxForMac/NSScanner+JSON (= 2.1.3)
+    - GoogleToolboxForMac/NSString+HTML (= 2.1.3)
+    - GoogleToolboxForMac/NSString+URLArguments (= 2.1.3)
+    - GoogleToolboxForMac/NSString+XML (= 2.1.3)
+    - GoogleToolboxForMac/NSThread+Blocks (= 2.1.3)
+    - GoogleToolboxForMac/Regex (= 2.1.3)
+    - GoogleToolboxForMac/StringEncoding (= 2.1.3)
+    - GoogleToolboxForMac/SystemVersion (= 2.1.3)
+    - GoogleToolboxForMac/URLBuilder (= 2.1.3)
+  - GoogleToolboxForMac/Core (2.1.3):
+    - GoogleToolboxForMac/Defines (= 2.1.3)
+  - GoogleToolboxForMac/DebugUtils (2.1.3):
+    - GoogleToolboxForMac/Defines (= 2.1.3)
+  - GoogleToolboxForMac/Defines (2.1.3)
+  - GoogleToolboxForMac/GeometryUtils (2.1.3):
+    - GoogleToolboxForMac/Defines (= 2.1.3)
+  - GoogleToolboxForMac/KVO (2.1.3):
+    - GoogleToolboxForMac/Core (= 2.1.3)
+    - GoogleToolboxForMac/DebugUtils (= 2.1.3)
+  - GoogleToolboxForMac/Logger (2.1.3):
+    - GoogleToolboxForMac/Defines (= 2.1.3)
+  - GoogleToolboxForMac/NSData+zlib (2.1.3):
+    - GoogleToolboxForMac/Defines (= 2.1.3)
+  - GoogleToolboxForMac/NSDictionary+URLArguments (2.1.3):
+    - GoogleToolboxForMac/DebugUtils (= 2.1.3)
+    - GoogleToolboxForMac/Defines (= 2.1.3)
+    - GoogleToolboxForMac/NSString+URLArguments (= 2.1.3)
+  - GoogleToolboxForMac/NSFileHandle+UniqueName (2.1.3):
+    - GoogleToolboxForMac/Defines (= 2.1.3)
+  - GoogleToolboxForMac/NSScanner+JSON (2.1.3):
+    - GoogleToolboxForMac/Defines (= 2.1.3)
+  - GoogleToolboxForMac/NSString+HTML (2.1.3):
+    - GoogleToolboxForMac/Core (= 2.1.3)
+  - GoogleToolboxForMac/NSString+URLArguments (2.1.3)
+  - GoogleToolboxForMac/NSString+XML (2.1.3):
+    - GoogleToolboxForMac/Defines (= 2.1.3)
+  - GoogleToolboxForMac/NSThread+Blocks (2.1.3):
+    - GoogleToolboxForMac/Defines (= 2.1.3)
+  - GoogleToolboxForMac/Regex (2.1.3):
+    - GoogleToolboxForMac/Defines (= 2.1.3)
+  - GoogleToolboxForMac/StringEncoding (2.1.3):
+    - GoogleToolboxForMac/Defines (= 2.1.3)
+  - GoogleToolboxForMac/SystemVersion (2.1.3):
+    - GoogleToolboxForMac/Defines (= 2.1.3)
+  - GoogleToolboxForMac/URLBuilder (2.1.3):
+    - GoogleToolboxForMac/Core (= 2.1.3)
+    - GoogleToolboxForMac/Defines (= 2.1.3)
+    - GoogleToolboxForMac/NSDictionary+URLArguments (= 2.1.3)
+    - GoogleToolboxForMac/NSString+URLArguments (= 2.1.3)
+  - IQKeyboardManager (5.0.7)
+  - Kingfisher (4.5.0)
+  - KoalaTeaFlowLayout (0.3.1)
   - nanopb (0.3.8):
     - nanopb/decode (= 0.3.8)
     - nanopb/encode (= 0.3.8)
   - nanopb/decode (0.3.8)
   - nanopb/encode (0.3.8)
   - ObjectMapper (3.0.0)
-  - Pageboy (2.0.0)
+  - Pageboy (2.1.0)
   - PKHUD (4.2.3)
-  - Protobuf (3.4.0)
-  - Realm (2.10.1):
-    - Realm/Headers (= 2.10.1)
-  - Realm/Headers (2.10.1)
-  - RealmSwift (2.10.1):
-    - Realm (= 2.10.1)
+  - Protobuf (3.5.0)
+  - Realm (3.0.2):
+    - Realm/Headers (= 3.0.2)
+  - Realm/Headers (3.0.2)
+  - RealmSwift (3.0.2):
+    - Realm (= 3.0.2)
   - Reusable (4.0.0):
     - Reusable/Storyboard (= 4.0.0)
     - Reusable/View (= 4.0.0)
   - Reusable/Storyboard (4.0.0)
   - Reusable/View (4.0.0)
-  - ShowTime (2.0.0)
-  - SideMenu (2.3.3)
+  - SideMenu (3.1.5)
   - SnapKit (4.0.0)
-  - SwifterSwift (4.0.0):
-    - SwifterSwift/Cocoa (= 4.0.0)
-    - SwifterSwift/Foundation (= 4.0.0)
-    - SwifterSwift/UIKit (= 4.0.0)
-  - SwifterSwift/Cocoa (4.0.0)
-  - SwifterSwift/Foundation (4.0.0)
-  - SwifterSwift/UIKit (4.0.0)
-  - SwiftIcons (1.5.1)
-  - SwiftyBeaver (1.4.1)
-  - SwiftyJSON (3.1.4)
-  - UIFontComplete (2.0.0)
+  - SwifterSwift (4.1.0):
+    - SwifterSwift/AppKit (= 4.1.0)
+    - SwifterSwift/CoreGraphics (= 4.1.0)
+    - SwifterSwift/CoreLocation (= 4.1.0)
+    - SwifterSwift/Foundation (= 4.1.0)
+    - SwifterSwift/SwiftStdlib (= 4.1.0)
+    - SwifterSwift/UIKit (= 4.1.0)
+  - SwifterSwift/AppKit (4.1.0)
+  - SwifterSwift/CoreGraphics (4.1.0)
+  - SwifterSwift/CoreLocation (4.1.0)
+  - SwifterSwift/Foundation (4.1.0)
+  - SwifterSwift/SwiftStdlib (4.1.0)
+  - SwifterSwift/UIKit (4.1.0)
+  - SwiftIcons (2.0)
+  - SwiftyBeaver (1.5.0)
+  - SwiftyJSON (4.0.0)
+  - UIFontComplete (2.0.1)
 
 DEPENDENCIES:
-  - Alamofire
-  - BetterSegmentedControl (~> 0.7)
-  - Crashlytics
-  - Eureka (from `https://github.com/xmartlabs/Eureka.git`, branch `feature/Xcode9-Swift4`)
-  - Fabric
-  - FacebookCore
-  - FacebookLogin
-  - Firebase/Core
-  - Firebase/Messaging
-  - FittableFontLabel
-  - GoogleMaps
-  - GooglePlacePicker
-  - GooglePlaces
-  - IQKeyboardManager
-  - Kingfisher
-  - KoalaTeaFlowLayout
-  - ObjectMapper (from `https://github.com/Hearst-DD/ObjectMapper.git`, branch `swift-4`)
-  - Pageboy
-  - PKHUD (~> 4.0)
-  - RealmSwift
-  - Reusable
-  - ShowTime (= 2.0.0)
-  - SideMenu
-  - SnapKit
-  - SwifterSwift (from `https://github.com/SwifterSwift/SwifterSwift.git`, branch `swift-4`)
-  - SwiftIcons
-  - SwiftyBeaver
-  - SwiftyJSON
-  - UIFontComplete
-
-EXTERNAL SOURCES:
-  Eureka:
-    :branch: feature/Xcode9-Swift4
-    :git: https://github.com/xmartlabs/Eureka.git
-  ObjectMapper:
-    :branch: swift-4
-    :git: https://github.com/Hearst-DD/ObjectMapper.git
-  SwifterSwift:
-    :branch: swift-4
-    :git: https://github.com/SwifterSwift/SwifterSwift.git
-
-CHECKOUT OPTIONS:
-  Eureka:
-    :commit: db1dd8105092f946fa5439cd5c1715f8e28daf53
-    :git: https://github.com/xmartlabs/Eureka.git
-  ObjectMapper:
-    :commit: 01d976a6096417e33f0c421e4c6ba8c8f53519d9
-    :git: https://github.com/Hearst-DD/ObjectMapper.git
-  SwifterSwift:
-    :commit: 685388cbc2d06e151f8ae3a9bbf99b3ba2b675c2
-    :git: https://github.com/SwifterSwift/SwifterSwift.git
+  - Alamofire (~> 4.6.0)
+  - BetterSegmentedControl (~> 0.9)
+  - Bolts (~> 1.8.4)
+  - Crashlytics (~> 3.9.3)
+  - Eureka (~> 4.0.1)
+  - Fabric (~> 1.7.2)
+  - FacebookCore (~> 0.3.0)
+  - FacebookLogin (~> 0.3.0)
+  - FBSDKCoreKit (~> 4.29.0)
+  - FBSDKLoginKit (~> 4.29.0)
+  - Firebase (~> 4.8.0)
+  - FirebaseAnalytics (~> 4.0.5)
+  - FirebaseCore (~> 4.0.13)
+  - FirebaseInstanceID (~> 2.0.8)
+  - FirebaseMessaging (~> 2.0.8)
+  - FittableFontLabel (~> 2.0.0)
+  - GoogleMaps (~> 2.5.0)
+  - GooglePlacePicker (~> 2.5.0)
+  - GooglePlaces (~> 2.5.0)
+  - GoogleToolboxForMac (~> 2.1.3)
+  - IQKeyboardManager (~> 5.0.7)
+  - Kingfisher (~> 4.5.0)
+  - KoalaTeaFlowLayout (~> 0.3.1)
+  - nanopb (~> 0.3.8)
+  - ObjectMapper (~> 3.0.0)
+  - Pageboy (~> 2.1.0)
+  - PKHUD (~> 4.2.3)
+  - Protobuf (~> 3.5.0)
+  - Realm (~> 3.0.2)
+  - RealmSwift (~> 3.0.2)
+  - Reusable (~> 4.0.0)
+  - SideMenu (~> 3.1.5)
+  - SnapKit (~> 4.0.0)
+  - SwifterSwift (~> 4.1.0)
+  - SwiftIcons (~> 2.0)
+  - SwiftyBeaver (~> 1.5.0)
+  - SwiftyJSON (~> 4.0.0)
+  - UIFontComplete (~> 2.0.1)
 
 SPEC CHECKSUMS:
-  Alamofire: 2d95912bf4c34f164fdfc335872e8c312acaea4a
-  BetterSegmentedControl: 9194e20687a02dd498a4e542cf523bdd8620fcb7
+  Alamofire: f41a599bd63041760b26d393ec1069d9d7b917f4
+  BetterSegmentedControl: 40b2b6a08bbc59663149624d1b5235efa8d43a3c
   Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
-  Crashlytics: 95d05f4e4c19a771250c4bd9ce344d996de32bbf
-  Eureka: 06695c5795c7be2ed84261d652c266228e19820d
-  Fabric: 2fb5676bc811af011a04513451f463dac6803206
-  FacebookCore: 2cb3f0fbff218e9d3119cec84bae983b232412de
-  FacebookLogin: c9d606504735780a9e3002465a615512e0a691a5
-  FBSDKCoreKit: c8b8582311ec11b145451d8b9717dc6cc2ae5a76
-  FBSDKLoginKit: f3f03b94c21eb834af243c0a881d48641f47ca60
-  Firebase: 9548cae14d69718add12d75a5b312893f7ef89c7
-  FirebaseAnalytics: 76f754d37ca5b04f36856729b6af3ca0152d1069
-  FirebaseCore: 9a6cc1e3eaf75905390f9220596ad4fd8f92faee
-  FirebaseInstanceID: a4fc702b5a026f7322964376047f1a3f1f7cc6ff
-  FirebaseMessaging: eaf1bfff0193170c04ea3ba3bfe983f68f893118
-  FittableFontLabel: 20502441e83bb41eb8b41611cca91af85c4e21e3
-  GoogleMaps: 8436ab5d1c25e36915b2f7416d0c8e3fa2e76c61
-  GooglePlacePicker: 755f10343d71280c7b016823e73fbae9625dfa8a
-  GooglePlaces: aafe5990fa7951e98e078761bbdaaf236d7e0c65
-  GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
-  IQKeyboardManager: 8eab4d8111418414619d1df8e4779ce5d0f8d7e2
-  Kingfisher: b771785e9461ed4b8686d40e7145f9e58100cb24
-  KoalaTeaFlowLayout: 816ab599e3ddcf3234b8a02e2eeff4aed5ad71c0
+  Crashlytics: dbb07d01876c171c5ccbdf7826410380189e452c
+  Eureka: c8bd5cc07143b6f66268c208d28a246c99b41955
+  Fabric: 9cd6a848efcf1b8b07497e0b6a2e7d336353ba15
+  FacebookCore: 3ffa190a3f1f96cec0e44d3fc221bc322c595ffa
+  FacebookLogin: 0af839ea858faef99550d16596b87b4a8e8906e6
+  FBSDKCoreKit: 6f139173dc63a1deaff4430a55f2fe5bb222d2af
+  FBSDKLoginKit: 56a057ca6822535ea0faa25f57a7c41edb697fd4
+  Firebase: 710decbbc6d9d48530e9a5dba3209740c3532e05
+  FirebaseAnalytics: 5b02a63ead2c3f0259cfc7f15e053e440587ecf8
+  FirebaseCore: 3c02ec652db3d03fdc8bc6d9154af3e20d64b6f5
+  FirebaseInstanceID: 81df5805a08001e69138664bdd02c6719a9ac80f
+  FirebaseMessaging: dfdcd307c2382290a1e297a81d0f18370f5b1bcd
+  FittableFontLabel: 977d130e137bd4f57a36adfb4f50361992abc7f2
+  GoogleMaps: c087b8e5dfe87ca6ebf59adb9b4894a4146bec4f
+  GooglePlacePicker: 1573e644ab54564d95c2643edc0f29091609e966
+  GooglePlaces: dd70d9d71ea1c7944846afe67de3712c99b30a77
+  GoogleToolboxForMac: 2501e2ad72a52eb3dfe7bd9aee7dad11b858bd20
+  IQKeyboardManager: 0bfa4607d39924116b5c0c8b55b5d789288b5cba
+  Kingfisher: 26ae0473102b77b575da51960c932431e3745407
+  KoalaTeaFlowLayout: 219c45709d0873d405b2de1b27080a9c411246b7
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
-  ObjectMapper: 739e5530df22248823f6cc7ed9e016ebf2c26a27
-  Pageboy: a43a4e34fad98ebfa415a5d33cd0389e5005a101
+  ObjectMapper: 92230db59bf8f341a5c3a3cf0b9fbdde3cf0d87f
+  Pageboy: f137e98cdb92c1913401d9d3c8888951ff81a630
   PKHUD: c7692163a09875cbf15827dc581df3c5cf7f1015
-  Protobuf: 03eef2ee0b674770735cf79d9c4d3659cf6908e8
-  Realm: fc7a317a5c2c9ba91f5f235ede4e2ea76e9eba0c
-  RealmSwift: 505ed6c15942a2e76f5cfa78a8667cfa997ee75b
+  Protobuf: 8a9838fba8dae3389230e1b7f8c104aa32389c03
+  Realm: 6f23fd1f178a09342eac21bfa7c2bf4312a7a180
+  RealmSwift: 695393add1b8f9d5fa75dd16e6355cf3935f71e2
   Reusable: 98e5fff1e0e2e00872199699b276dde08ee56c07
-  ShowTime: f4f098ef02c23db8dc10ede4c63e20a44a3d62d4
-  SideMenu: a447554ae5c982e8077666389e1c8b0c8656e065
+  SideMenu: 47dbf9e4d878062d8994aed43f6e4bf6c1fea30b
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
-  SwifterSwift: aac4b62483c5b394346f78a5d484472d23670b97
-  SwiftIcons: 287593643898af5a9ef16be4b1f9cf91a436cbc7
-  SwiftyBeaver: f04f739cca6826c5fb0f575fed8fa3293f76b83e
-  SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
-  UIFontComplete: 9ac4f1c0301293b9ee31908bd497aa846f66a085
+  SwifterSwift: 4d962b5d653760b85266832aff6ab6d08c1b7974
+  SwiftIcons: 1897f6a88d0e70961c0725c822cb77a3b90145ea
+  SwiftyBeaver: 384235c59d9c67b4a5e1810cffa713babba34efd
+  SwiftyJSON: 070dabdcb1beb81b247c65ffa3a79dbbfb3b48aa
+  UIFontComplete: 7e3ce7f0a12d2529fb07f537e262aabfa87df280
 
-PODFILE CHECKSUM: 3a75a60f5570444627e95785f8ee00818def92b7
+PODFILE CHECKSUM: f35c4db25f848dd1d5082acca72f501136d58acc
 
-COCOAPODS: 1.4.0.beta.1
+COCOAPODS: 1.3.1

@@ -12,44 +12,44 @@ import ObjectMapper
 import SwifterSwift
 
 public class EventModel: Object, Mappable {
-    dynamic var key: String? = nil
-    dynamic var name: String? = nil
-    dynamic var desc: String? = nil
-    dynamic var coverURL: String? = nil
-    dynamic var start_time: String? = nil
-    dynamic lazy var startTimeDate: Date? = {
+    @objc dynamic var key: String? = nil
+    @objc dynamic var name: String? = nil
+    @objc dynamic var desc: String? = nil
+    @objc dynamic var coverURL: String? = nil
+    @objc dynamic var start_time: String? = nil
+    var startTimeDate: Date? {
         if let startTime = self.start_time {
             let date = Date(iso8601String: startTime)
             return date
         }
         return nil
-    }()
-    dynamic var end_time: String? = nil
-    dynamic lazy var endTimeDate: Date? = {
+    }
+    @objc dynamic var end_time: String? = nil
+    var endTimeDate: Date? {
         if let endTime = self.end_time {
             let date = Date(iso8601String: endTime)
             return date
         }
         return nil
-    }()
-    dynamic var updatedAt: String? = nil
-    dynamic var createdAt: String? = nil
-    dynamic var shelterId: String? = nil
-    dynamic var facebookId: String? = nil
+    }
+    @objc dynamic var updatedAt: String? = nil
+    @objc dynamic var createdAt: String? = nil
+    @objc dynamic var shelterId: String? = nil
+    @objc dynamic var facebookId: String? = nil
     // Location Object
-    dynamic var locationName: String? = nil
-    dynamic var locationCity: String? = nil
-    dynamic var locationCountry: String? = nil
-    dynamic var locationState: String? = nil
-    dynamic var locationStreet: String? = nil
-    dynamic var locationZip: String? = nil
-    dynamic var favorited: Bool = false
-    dynamic var imageURL1: String? = nil
+    @objc dynamic var locationName: String? = nil
+    @objc dynamic var locationCity: String? = nil
+    @objc dynamic var locationCountry: String? = nil
+    @objc dynamic var locationState: String? = nil
+    @objc dynamic var locationStreet: String? = nil
+    @objc dynamic var locationZip: String? = nil
+    @objc dynamic var favorited: Bool = false
+    @objc dynamic var imageURL1: String? = nil
     
     let newEventForShelter = LinkingObjects(fromType: UpdatesModel.self, property: "newEvents")
     let updatedEventForShelter = LinkingObjects(fromType: UpdatesModel.self, property: "updatedEvents")
 
-    dynamic var connectedShelter: ShelterModel! = nil
+    @objc dynamic var connectedShelter: ShelterModel! = nil
     
     override public static func primaryKey() -> String? {
         return "key"

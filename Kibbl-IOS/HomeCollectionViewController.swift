@@ -168,15 +168,15 @@ class HomeCollectionViewController: UICollectionViewController {
         
         switch indexPath.section {
         case 1:
-            reusableview.titleLabel.text = "LATEST EVENTS"
+            reusableview?.titleLabel.text = "LATEST EVENTS"
         case 2:
-            reusableview.titleLabel.text = "LATEST SHELTERS"
+            reusableview?.titleLabel.text = "LATEST SHELTERS"
         default:
-            reusableview.titleLabel.text = "LATEST PETS"
+            reusableview?.titleLabel.text = "LATEST PETS"
         }
         
         
-        return reusableview
+        return reusableview ?? UICollectionReusableView()
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
@@ -207,7 +207,7 @@ class HomeCollectionViewController: UICollectionViewController {
 
 extension HomeCollectionViewController {
     func registerNotifications(for results: Results<PetModel>, in section:Int) {
-        let notificationToken = results.addNotificationBlock { [unowned self] (changes: RealmCollectionChange) in
+        let notificationToken = results.observe { [unowned self] (changes: RealmCollectionChange) in
             guard let collectionView = self.collectionView else { return }
             
             switch changes {
@@ -234,7 +234,7 @@ extension HomeCollectionViewController {
     }
     
     func registerNotifications(for results: Results<ShelterModel>, in section:Int) {
-        let notificationToken = results.addNotificationBlock { [unowned self] (changes: RealmCollectionChange) in
+        let notificationToken = results.observe { [unowned self] (changes: RealmCollectionChange) in
             guard let collectionView = self.collectionView else { return }
             
             switch changes {
@@ -261,7 +261,7 @@ extension HomeCollectionViewController {
     }
     
     func registerNotifications(for results: Results<EventModel>, in section:Int) {
-        let notificationToken = results.addNotificationBlock { [unowned self] (changes: RealmCollectionChange) in
+        let notificationToken = results.observe { [unowned self] (changes: RealmCollectionChange) in
             guard let collectionView = self.collectionView else { return }
             
             switch changes {

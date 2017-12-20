@@ -92,7 +92,7 @@ extension FilterModel {
         if let file = Bundle.main.path(forResource: "Filters", ofType: "json") {
             do {
                 let jsonData = try Data(contentsOf: URL(fileURLWithPath: file))
-                let json = JSON(data: jsonData)
+                let json = try JSON(data: jsonData)
                 
                 for item in json["Filters"].arrayValue {
                     let newModel = FilterModel(JSONString: "\(item)")

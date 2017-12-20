@@ -548,7 +548,7 @@ class API {
             switch response.result {
             case .success:
                 guard let data = response.data else { return }
-                let json = JSON(data: data)
+                let json = try! JSON(data: data)
                 for item in json["data"].arrayValue {
                     
                     if item["shelterId"].null == nil {
@@ -685,7 +685,7 @@ class API {
                 
             case .success:
                 guard let data = response.data else { return }
-                let json = JSON(data: data)
+                let json = try! JSON(data: data)
                 for item in json["data"].arrayValue {
 
                     if item["petID"].null == nil {
@@ -773,7 +773,7 @@ class API {
                 
             case .success:
                 guard let data = response.data else { return }
-                let json = JSON(data: data)
+                let json = try! JSON(data: data)
 
                 for item in json["data"].arrayValue {
                     let updatesModel = UpdatesModel(JSONString: "\(item)")
@@ -860,16 +860,16 @@ class API {
                     let realm = try! Realm()
                     try! realm.write {
                         if !newPets.isEmpty {
-                            updatesModel?.newPets.append(contentsOf: newPets)
+                            updatesModel?.newPets.append(objectsIn: newPets)
                         }
                         if !updatedPets.isEmpty {
-                            updatesModel?.updatedPets.append(contentsOf: updatedPets)
+                            updatesModel?.updatedPets.append(objectsIn: updatedPets)
                         }
                         if !newEvents.isEmpty {
-                            updatesModel?.newEvents.append(contentsOf: newEvents)
+                            updatesModel?.newEvents.append(objectsIn: newEvents)
                         }
                         if !updatedEvents.isEmpty {
-                            updatesModel?.updatedEvents.append(contentsOf: updatedEvents)
+                            updatesModel?.updatedEvents.append(objectsIn: updatedEvents)
                         }
                     }
                     updatesModel?.save()

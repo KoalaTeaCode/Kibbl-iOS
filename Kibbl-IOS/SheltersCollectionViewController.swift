@@ -156,9 +156,9 @@ class SheltersCollectionViewController: UICollectionViewController {
                                  at indexPath: IndexPath) -> UICollectionReusableView {
         
         let reusableview = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withClass: FilterHeaderCollectionReusableView.self, for: indexPath)
-        reusableview.fromViewController = self
+        reusableview?.fromViewController = self
         
-        return reusableview
+        return reusableview ?? UICollectionReusableView()
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
@@ -177,7 +177,7 @@ class SheltersCollectionViewController: UICollectionViewController {
 extension SheltersCollectionViewController {
     // MARK: Realm
     func registerNotifications() {
-        token = data.addNotificationBlock {[weak self] (changes: RealmCollectionChange) in
+        token = data.observe {[weak self] (changes: RealmCollectionChange) in
             guard let collectionView = self?.collectionView else { return }
             switch changes {
             case .initial:

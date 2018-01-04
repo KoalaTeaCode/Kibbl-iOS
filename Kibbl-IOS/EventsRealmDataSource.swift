@@ -16,21 +16,21 @@ struct Event: Mappable {
     var desc: String?
     var coverURL: String?
     var start_time: String?
-    lazy var startTimeDate: Date? = {
+    var startTimeDate: Date? {
         if let startTime = self.start_time {
             let date = Date(iso8601String: startTime)
             return date
         }
         return nil
-    }()
+    }
     var end_time: String?
-    lazy var endTimeDate: Date? = {
+    var endTimeDate: Date? {
         if let endTime = self.end_time {
             let date = Date(iso8601String: endTime)
             return date
         }
         return nil
-    }()
+    }
     var updatedAt: String?
     var createdAt: String?
     var shelterId: String?
@@ -96,21 +96,21 @@ public class RealmEvent: Object, Mappable {
     dynamic var desc: String? = nil
     dynamic var coverURL: String? = nil
     dynamic var start_time: String? = nil
-    dynamic lazy var startTimeDate: Date? = {
+    var startTimeDate: Date? {
         if let startTime = self.start_time {
             let date = Date(iso8601String: startTime)
             return date
         }
         return nil
-    }()
+    }
     dynamic var end_time: String? = nil
-    dynamic lazy var endTimeDate: Date? = {
+    var endTimeDate: Date? {
         if let endTime = self.end_time {
             let date = Date(iso8601String: endTime)
             return date
         }
         return nil
-    }()
+    }
     dynamic var updatedAt: String? = nil
     dynamic var createdAt: String? = nil
     dynamic var shelterId: String? = nil

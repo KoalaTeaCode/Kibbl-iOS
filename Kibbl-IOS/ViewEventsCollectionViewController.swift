@@ -140,9 +140,9 @@ class ViewEventsCollectionViewController: UICollectionViewController {
                                  at indexPath: IndexPath) -> UICollectionReusableView {
         
         let reusableview = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withClass: FilterHeaderCollectionReusableView.self, for: indexPath)
-        reusableview.fromViewController = self
+        reusableview?.fromViewController = self
         
-        return reusableview
+        return reusableview ?? UICollectionReusableView()
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {

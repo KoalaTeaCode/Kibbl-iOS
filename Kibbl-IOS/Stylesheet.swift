@@ -276,14 +276,14 @@ extension Stylesheet {
         segmentControl.titleFont = UIFont(name: "HelveticaNeue", size: 14.0.calculateWidth())!
         segmentControl.selectedTitleFont = UIFont(name: "HelveticaNeue-Medium", size: 14.0.calculateWidth())!
         
-        segmentControl.selectedTitleColor = Colors.white
-        segmentControl.titleColor = Colors.offBlack
-        segmentControl.indicatorViewBackgroundColor = Colors.dark1
-        
         let segmentHeight = viewController.topBarHeight / 2
-        
         let cornerRadius = segmentHeight / 2
-        segmentControl.realCornerRadius = cornerRadius
+        segmentControl.options = [.backgroundColor(Colors.white),
+                                  .titleColor(Colors.offBlack),
+                                  .indicatorViewBackgroundColor(Colors.dark1),
+                                  .cornerRadius(cornerRadius)]
+        
+//        segmentControl.realCornerRadius = cornerRadius
         segmentControl.layer.cornerRadius = cornerRadius
         segmentControl.backgroundColor = Colors.offWhite
     }

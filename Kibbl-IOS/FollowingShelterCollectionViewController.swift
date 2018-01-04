@@ -55,7 +55,7 @@ class FollowingShelterCollectionViewController: UICollectionViewController {
     }
     
     func registerNotifications() {
-        token = data.addNotificationBlock {[weak self] (changes: RealmCollectionChange) in
+        token = data.observe {[weak self] (changes: RealmCollectionChange) in
             guard let collectionView = self?.collectionView else { return }
             
             switch changes {
@@ -124,7 +124,7 @@ class FollowingShelterCollectionViewController: UICollectionViewController {
         
         let reusableview = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withClass: PushNotificationCollectionViewReusableView.self, for: indexPath)
         
-        return reusableview
+        return reusableview ?? UICollectionReusableView()
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {

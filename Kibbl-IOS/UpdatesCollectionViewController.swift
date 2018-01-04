@@ -54,7 +54,7 @@ class UpdatesCollectionViewController: UICollectionViewController {
     }
     
     func registerNotifications() {
-        token = data.addNotificationBlock {[weak self] (changes: RealmCollectionChange) in
+        token = data.observe {[weak self] (changes: RealmCollectionChange) in
             guard let collectionView = self?.collectionView else { return }
             
             switch changes {

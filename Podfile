@@ -26,7 +26,7 @@ def shared_pods
   pod 'Kingfisher', '~> 4.5.0'
   pod 'KoalaTeaFlowLayout', '~> 0.3.1'
   pod 'ObjectMapper', '~> 3.0.0'
-  pod 'PKHUD', '~> 4.2.3'
+  pod 'PKHUD', '~> 5.0'
   pod 'Pageboy', '~> 2.1.0'
   pod 'Protobuf', '~> 3.5.0'
   pod 'Realm', '~> 3.0.2'
@@ -45,7 +45,7 @@ end
 target 'Kibbl-IOS' do
   # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
   use_frameworks!
-  
+
   # Pods for Kibbl-IOS
   shared_pods
 

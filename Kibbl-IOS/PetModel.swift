@@ -46,6 +46,7 @@ public class PetModel: Object, Mappable {
     dynamic var state: String? = nil
     dynamic var zipcode: String? = nil
     dynamic var phoneNumber: String? = nil
+    dynamic var rescueGroupId: String? = nil
     
     dynamic var connectedShelter: ShelterModel! = nil
     
@@ -93,6 +94,7 @@ public class PetModel: Object, Mappable {
         state <- map["contact.state"]
         zipcode <- map["contact.location"]
         phoneNumber <- map["contact.phone"]
+        rescueGroupId <- map["rescueGroupId"]
         
         connectedShelter <- (map["shelterId"], SingleTransform<ShelterModel>())
     }

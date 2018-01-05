@@ -221,7 +221,11 @@ class PetDetailDescTableViewCell: UITableViewCell, Reusable {
     }
     
     func contactButtonPressed() {
-        guard let url = model.getWebsite() else { return }
+//        guard let url = model.getWebsite() else { return }
+        guard let rescueGroupId = model.rescueGroupId else { return }
+        let urlString = "https://toolkit.rescuegroups.org/iframe/fb/v1.0/pet?animalID=\(rescueGroupId)"
+        guard let url = URL(string: urlString) else { return }
+        
         if #available(iOS 10.0, *) {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         } else {
